@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Settings - Productivity Ops</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#0c0e16",
+                        "surface-container": "#1d1f27",
+                        "on-primary-fixed": "#00174b",
+                        "tertiary-fixed": "#ffdbcd",
+                        "inverse-primary": "#0053db",
+                        "surface-dim": "#11131b",
+                        "surface-tint": "#b4c5ff",
+                        "primary": "#b4c5ff",
+                        "outline": "#8d90a0",
+                        "on-secondary-fixed-variant": "#39485a",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "primary-container": "#2563eb",
+                        "on-tertiary-container": "#ffede6",
+                        "on-secondary-container": "#a7b6cc",
+                        "on-tertiary": "#581e00",
+                        "outline-variant": "#434655",
+                        "on-primary": "#002a78",
+                        "on-background": "#e1e2ed",
+                        "on-tertiary-fixed": "#360f00",
+                        "tertiary-container": "#bc4800",
+                        "secondary-fixed": "#d4e4fa",
+                        "on-error": "#690005",
+                        "secondary": "#b9c8de",
+                        "on-surface-variant": "#c3c6d7",
+                        "primary-fixed": "#dbe1ff",
+                        "secondary-fixed-dim": "#b9c8de",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "tertiary": "#ffb596",
+                        "surface-bright": "#373942",
+                        "background": "#11131b",
+                        "on-secondary-fixed": "#0d1c2d",
+                        "inverse-on-surface": "#2e3039",
+                        "secondary-container": "#39485a",
+                        "surface-container-high": "#282a32",
+                        "error": "#ffb4ab",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "surface": "#11131b",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "surface-container-low": "#191b23",
+                        "on-surface": "#e1e2ed",
+                        "on-error-container": "#ffdad6",
+                        "surface-variant": "#32343d",
+                        "error-container": "#93000a",
+                        "on-secondary": "#233143",
+                        "inverse-surface": "#e1e2ed",
+                        "on-primary-container": "#eeefff",
+                        "surface-container-highest": "#32343d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "gutter": "16px",
+                        "xl": "32px",
+                        "touch-target": "44px",
+                        "margin": "24px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0", "fontWeight": "400" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "0", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400" }],
+                        "body-sm": ["13px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #0F172A; /* Level 0 Background */
+            color: #e1e2ed; /* on-background */
+        }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden bg-surface-container-lowest text-on-surface">
+<!-- SideNavBar Component -->
+<nav class="hidden md:flex flex-col h-screen w-64 left-0 top-0 bg-surface-container-low dark:bg-surface-container-low border-r border-outline-variant dark:border-outline-variant p-md gap-base z-30 shrink-0">
+<!-- Header -->
+<div class="flex items-center gap-md mb-xl px-sm">
+<div class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center shrink-0 overflow-hidden">
+<img alt="Ops Logo" class="w-full h-full object-cover" data-alt="A stylized, minimalist logo mark featuring sharp geometric shapes in deep blue and crisp white. The logo sits perfectly centered within a dark circular container. Lighting is even and professional, suggesting a modern enterprise software brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwFeQzr6_9-sOk_4snd3d_rxwY17aIjjvPYutLLdWtI5BDUQ_6ouCrqAHWZt0O8oMt8yJAWjez3kqkyi75VDS9JJi9Ql95xnKLyyEFL7qC9E1bXj5bJ-CTZMfzA9UxNWh5i2al7wwRMlLzZEhwsonNCombCb3P1uYt5PgQMO9iwxypuj-2agvo4S8qsRL7tcsTeomsHNAv24iWIxFZxT_Ecs6lcgi9vcnwLIswMvSysOXW-TRskGjz9_YEk-x89PWJXK6Xdn6QL6U"/>
+</div>
+<div class="flex flex-col">
+<span class="text-headline-sm font-headline-sm font-black text-on-surface">Productivity Ops</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Enterprise Console</span>
+</div>
+</div>
+<!-- CTA -->
+<button class="mb-lg h-[36px] bg-primary-container text-white text-label-md font-label-md rounded flex items-center justify-center gap-sm hover:bg-opacity-90 transition-colors focus:ring-2 focus:ring-primary-container focus:ring-offset-2 focus:ring-offset-surface-container-low">
+<span class="material-symbols-outlined" style="font-size: 18px;">add</span>
+            New Entry
+        </button>
+<!-- Main Navigation -->
+<div class="flex flex-col gap-xs flex-1">
+<a class="flex items-center gap-md px-sm py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 cursor-pointer select-none text-label-md font-label-md focus:ring-2 focus:ring-primary-container" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-sm py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 cursor-pointer select-none text-label-md font-label-md focus:ring-2 focus:ring-primary-container" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span>Insights</span>
+</a>
+<!-- Active Tab: Settings -->
+<a class="flex items-center gap-md px-sm py-sm rounded-lg bg-secondary-container dark:bg-secondary-container text-on-secondary-container dark:text-on-secondary-container transition-all duration-150 cursor-pointer select-none text-label-md font-label-md focus:ring-2 focus:ring-primary-container" href="#">
+<span class="material-symbols-outlined" data-icon="settings" data-weight="fill" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span>Settings</span>
+</a>
+</div>
+<!-- Footer Navigation -->
+<div class="flex flex-col gap-xs mt-auto pt-md border-t border-outline-variant">
+<a class="flex items-center gap-md px-sm py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 cursor-pointer select-none text-label-md font-label-md focus:ring-2 focus:ring-primary-container" href="#">
+<span class="material-symbols-outlined" data-icon="contact_support">contact_support</span>
+<span>Support</span>
+</a>
+<a class="flex items-center gap-md px-sm py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 cursor-pointer select-none text-label-md font-label-md focus:ring-2 focus:ring-primary-container" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span>Sign Out</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+<!-- TopAppBar Component (Mobile Visible, Desktop Hidden for this specific split layout, but structurally included as requested or adapted for mobile top nav if needed. Adapting to purely mobile top nav as sidebar covers desktop) -->
+<header class="md:hidden flex justify-between items-center h-14 w-full px-gutter bg-surface-container dark:bg-surface-container border-b border-outline-variant dark:border-outline-variant z-40 shrink-0">
+<div class="text-headline-md font-headline-md font-bold text-primary dark:text-primary">
+                Productivity Ops
+            </div>
+<div class="flex items-center gap-md text-primary dark:text-primary">
+<button class="hover:bg-surface-bright dark:hover:bg-surface-bright transition-colors duration-200 p-sm rounded-full focus:ring-2 focus:ring-primary-container">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="hover:bg-surface-bright dark:hover:bg-surface-bright transition-colors duration-200 p-sm rounded-full focus:ring-2 focus:ring-primary-container">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-variant border border-outline-variant ml-sm">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a person looking directly at the camera. The background is a plain, dark studio backdrop. The lighting is soft and flattering, highlighting the subject's features subtly. The overall tone is corporate and approachable." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeXIdxW6_nhik3hQDlwGX_ERgCwc3R0qbfMqLUwsfyhAaEUFCykw2bSLgNmNbblDeWP9MolQp7OixmtY20Ygv-zge0SCFdvD-jGDGPZk7SdPILTweKCTLVgK1wwRRvw3vwAzndoOtGrAWAiqoPHSGeW2ewIj6ZCD5E1-uFo0Oe-VmtqAMoqjTuqxOOB-_No9kL_UYP51cnJ4eriSeh_begVkTDXda6PfDrnXuaoy7FPUK_intJ_nucc-a8QJY_rJxWxBonzBjgJKI"/>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<main class="flex-1 overflow-y-auto p-margin">
+<div class="max-w-4xl mx-auto space-y-xl">
+<!-- Page Header -->
+<div>
+<h1 class="text-headline-lg font-headline-lg text-on-surface mb-xs">Application Preferences</h1>
+<p class="text-body-md font-body-md text-on-surface-variant">Manage your workspace settings, notifications, and local data.</p>
+</div>
+<!-- Bento Grid Container -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-lg">
+<!-- Notifications Panel (Spans 8 cols on large) -->
+<section class="lg:col-span-8 bg-surface rounded-xl border border-[#334155] p-lg flex flex-col">
+<div class="flex items-center gap-md mb-md border-b border-[#334155] pb-md">
+<span class="material-symbols-outlined text-primary" style="font-size: 24px;">notifications_active</span>
+<h2 class="text-headline-sm font-headline-sm text-on-surface">Notification Preferences</h2>
+</div>
+<div class="space-y-lg flex-1">
+<!-- Toggle Item 1 -->
+<div class="flex items-center justify-between">
+<div>
+<h3 class="text-label-md font-label-md text-on-surface mb-base">System Alerts</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Critical system updates and operational alerts.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary-container rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container border border-outline-variant"></div>
+</label>
+</div>
+<!-- Toggle Item 2 -->
+<div class="flex items-center justify-between">
+<div>
+<h3 class="text-label-md font-label-md text-on-surface mb-base">Daily Digest</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">A summary of the previous day's metrics.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary-container rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container border border-outline-variant"></div>
+</label>
+</div>
+<!-- Toggle Item 3 -->
+<div class="flex items-center justify-between">
+<div>
+<h3 class="text-label-md font-label-md text-on-surface mb-base">Weekly Report Generation</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Automated comprehensive PDF reports.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary-container rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container border border-outline-variant"></div>
+</label>
+</div>
+</div>
+</section>
+<!-- Version & System Info (Spans 4 cols on large) -->
+<section class="lg:col-span-4 bg-surface rounded-xl border border-[#334155] p-lg flex flex-col relative overflow-hidden group">
+<!-- Abstract decorative background element -->
+<div class="absolute -right-10 -top-10 w-40 h-40 bg-primary opacity-5 rounded-full blur-2xl group-hover:opacity-10 transition-opacity duration-500 pointer-events-none"></div>
+<div class="flex items-center gap-md mb-md border-b border-[#334155] pb-md relative z-10">
+<span class="material-symbols-outlined text-on-surface-variant" style="font-size: 24px;">info</span>
+<h2 class="text-headline-sm font-headline-sm text-on-surface">System Info</h2>
+</div>
+<div class="flex-1 flex flex-col justify-center gap-md relative z-10">
+<div>
+<span class="block text-label-sm font-label-sm text-on-surface-variant mb-base">Current Version</span>
+<span class="block text-body-lg font-body-lg font-mono text-primary">v4.12.8-stable</span>
+</div>
+<div>
+<span class="block text-label-sm font-label-sm text-on-surface-variant mb-base">Last Sync</span>
+<span class="block text-body-md font-body-md text-on-surface">Today, 08:42 AM PST</span>
+</div>
+<div>
+<span class="block text-label-sm font-label-sm text-on-surface-variant mb-base">Environment</span>
+<span class="inline-flex items-center px-2 py-1 rounded bg-secondary-container text-on-secondary-container text-label-sm font-label-sm border border-outline-variant">Production</span>
+</div>
+</div>
+<button class="mt-lg w-full h-[36px] bg-transparent border border-[#334155] text-on-surface text-label-md font-label-md rounded flex items-center justify-center gap-sm hover:bg-[#334155] transition-colors focus:ring-2 focus:ring-primary-container focus:ring-offset-2 focus:ring-offset-surface">
+<span class="material-symbols-outlined" style="font-size: 16px;">update</span>
+                            Check for Updates
+                        </button>
+</section>
+<!-- Data Management (Spans full width) -->
+<section class="lg:col-span-12 bg-surface rounded-xl border border-[#334155] p-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-lg">
+<div class="max-w-xl">
+<div class="flex items-center gap-md mb-xs">
+<span class="material-symbols-outlined text-error" style="font-size: 24px;">database</span>
+<h2 class="text-headline-sm font-headline-sm text-on-surface">Local Storage Management</h2>
+</div>
+<p class="text-body-md font-body-md text-on-surface-variant">
+                                Clear cached operational data and temporary files stored on this device. This action cannot be undone and will require a full resync upon next login.
+                            </p>
+</div>
+<div class="shrink-0">
+<button class="h-[44px] px-lg bg-error-container text-on-error-container text-label-md font-label-md rounded flex items-center justify-center gap-sm hover:bg-opacity-90 transition-colors focus:ring-2 focus:ring-error focus:ring-offset-2 focus:ring-offset-surface">
+<span class="material-symbols-outlined" style="font-size: 18px;">delete_forever</span>
+                                Clear All Data
+                            </button>
+</div>
+</section>
+</div>
+</div>
+</main>
+</div>
+</body></html>

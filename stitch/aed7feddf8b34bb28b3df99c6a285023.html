@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Profile Panel</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-lowest": "#0c0e16",
+                      "surface-container": "#1d1f27",
+                      "on-primary-fixed": "#00174b",
+                      "tertiary-fixed": "#ffdbcd",
+                      "inverse-primary": "#0053db",
+                      "surface-dim": "#11131b",
+                      "surface-tint": "#b4c5ff",
+                      "primary": "#b4c5ff",
+                      "outline": "#8d90a0",
+                      "on-secondary-fixed-variant": "#39485a",
+                      "tertiary-fixed-dim": "#ffb596",
+                      "primary-container": "#2563eb",
+                      "on-tertiary-container": "#ffede6",
+                      "on-secondary-container": "#a7b6cc",
+                      "on-tertiary": "#581e00",
+                      "outline-variant": "#434655",
+                      "on-primary": "#002a78",
+                      "on-background": "#e1e2ed",
+                      "on-tertiary-fixed": "#360f00",
+                      "tertiary-container": "#bc4800",
+                      "secondary-fixed": "#d4e4fa",
+                      "on-error": "#690005",
+                      "secondary": "#b9c8de",
+                      "on-surface-variant": "#c3c6d7",
+                      "primary-fixed": "#dbe1ff",
+                      "secondary-fixed-dim": "#b9c8de",
+                      "on-primary-fixed-variant": "#003ea8",
+                      "tertiary": "#ffb596",
+                      "surface-bright": "#373942",
+                      "background": "#11131b",
+                      "on-secondary-fixed": "#0d1c2d",
+                      "inverse-on-surface": "#2e3039",
+                      "secondary-container": "#39485a",
+                      "surface-container-high": "#282a32",
+                      "error": "#ffb4ab",
+                      "on-tertiary-fixed-variant": "#7d2d00",
+                      "surface": "#11131b",
+                      "primary-fixed-dim": "#b4c5ff",
+                      "surface-container-low": "#191b23",
+                      "on-surface": "#e1e2ed",
+                      "on-error-container": "#ffdad6",
+                      "surface-variant": "#32343d",
+                      "error-container": "#93000a",
+                      "on-secondary": "#233143",
+                      "inverse-surface": "#e1e2ed",
+                      "on-primary-container": "#eeefff",
+                      "surface-container-highest": "#32343d"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "base": "4px",
+                      "sm": "8px",
+                      "md": "16px",
+                      "lg": "24px",
+                      "gutter": "16px",
+                      "xl": "32px",
+                      "touch-target": "44px",
+                      "margin": "24px",
+                      "xs": "4px"
+              },
+              "fontFamily": {
+                      "label-sm": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "label-md": [
+                              "Inter"
+                      ],
+                      "headline-sm": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "body-sm": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "label-sm": [
+                              "11px",
+                              {
+                                      "lineHeight": "14px",
+                                      "letterSpacing": "0.02em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-md": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-sm": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-sm": [
+                              "13px",
+                              {
+                                      "lineHeight": "18px",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-md": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+</head>
+<body class="bg-background text-on-surface h-screen w-full flex relative overflow-hidden font-body-md antialiased">
+<!-- Scrim / Backdrop -->
+<div aria-hidden="true" class="absolute inset-0 bg-background/80 backdrop-blur-sm z-40"></div>
+<!-- Profile Drawer / Panel -->
+<aside aria-label="Profile Panel" class="absolute top-0 right-0 h-full w-full max-w-sm bg-surface-container border-l border-outline-variant z-50 flex flex-col shadow-2xl transition-transform duration-300 translate-x-0">
+<!-- Header -->
+<header class="flex items-center justify-between p-lg border-b border-outline-variant">
+<h2 class="text-headline-md font-headline-md text-on-surface">Profile</h2>
+<button aria-label="Close Profile" class="h-touch-target w-touch-target flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-variant rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-offset-2 focus:ring-offset-surface-container">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</header>
+<!-- User Info Segment -->
+<div class="p-lg flex flex-col items-center border-b border-outline-variant bg-surface-container-low">
+<div class="relative mb-md">
+<img alt="Alex Mercer Profile Picture" class="w-24 h-24 rounded-full object-cover border-2 border-outline-variant" data-alt="A professional headshot of a man with short brown hair and a neat beard, wearing a dark grey tailored shirt. He is looking directly at the camera with a confident, neutral expression. The background is a slightly out-of-focus, sleek modern office interior with subtle, cool-toned lighting fitting a corporate tech environment. The image has a crisp, high-contrast aesthetic typical of high-end corporate photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWqhFAPh9FBmGG-agp0yElmf8hRqENeYXtNdH9jJ150wKGIgkkmSPPQMn5YpfAG_qPzlit6SUuvZ9FgsHEfjvfuxftfE8fQhrx73HEliMkProm38CKFEtzo7YKmBQgt_Pwdt3OOnr30OpbCCaMD86mayhbnw_BKg5POOOX2Xzi8dLq9f9Z6NJocI8-3IUwjPlJPieOCUj3inlYEK2NN8ia9ZmCtSHWbZvT5QExY-rzON9kC4WXSYF9UL3nm081dHRl7exBZfHMdNg"/>
+<div class="absolute bottom-0 right-0 w-6 h-6 bg-primary-container rounded-full border-2 border-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px] text-on-primary-container" data-icon="edit">edit</span>
+</div>
+</div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface text-center mb-xs">Alex Mercer</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant text-center">Logistics Lead</p>
+<p class="text-label-sm font-label-sm text-primary mt-sm bg-primary-container/10 px-sm py-xs rounded-full">Pro Account</p>
+</div>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-md space-y-md">
+<!-- Account Settings Group -->
+<section>
+<h4 class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider mb-sm px-sm">Account Settings</h4>
+<div class="bg-surface rounded-lg border border-outline-variant overflow-hidden">
+<a class="flex items-center p-md hover:bg-surface-variant transition-colors border-b border-outline-variant focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-inset" href="#">
+<span class="material-symbols-outlined text-on-surface-variant mr-md" data-icon="person">person</span>
+<div class="flex-1">
+<p class="text-body-md font-body-md text-on-surface">Personal Information</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="chevron_right">chevron_right</span>
+</a>
+<a class="flex items-center p-md hover:bg-surface-variant transition-colors border-b border-outline-variant focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-inset" href="#">
+<span class="material-symbols-outlined text-on-surface-variant mr-md" data-icon="security">security</span>
+<div class="flex-1">
+<p class="text-body-md font-body-md text-on-surface">Security &amp; Privacy</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="chevron_right">chevron_right</span>
+</a>
+<a class="flex items-center p-md hover:bg-surface-variant transition-colors focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-inset" href="#">
+<span class="material-symbols-outlined text-on-surface-variant mr-md" data-icon="notifications">notifications</span>
+<div class="flex-1">
+<p class="text-body-md font-body-md text-on-surface">Notifications</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="chevron_right">chevron_right</span>
+</a>
+</div>
+</section>
+<!-- Preferences Group -->
+<section>
+<h4 class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider mb-sm px-sm">Preferences</h4>
+<div class="bg-surface rounded-lg border border-outline-variant overflow-hidden">
+<button class="w-full flex items-center justify-between p-md hover:bg-surface-variant transition-colors border-b border-outline-variant focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-inset">
+<div class="flex items-center">
+<span class="material-symbols-outlined text-on-surface-variant mr-md" data-icon="dark_mode">dark_mode</span>
+<span class="text-body-md font-body-md text-on-surface">Dark Theme</span>
+</div>
+<!-- Toggle Switch (Mock) -->
+<div class="w-10 h-6 bg-primary-container rounded-full relative">
+<div class="absolute right-1 top-1 w-4 h-4 bg-on-primary-container rounded-full"></div>
+</div>
+</button>
+<a class="flex items-center p-md hover:bg-surface-variant transition-colors focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-inset" href="#">
+<span class="material-symbols-outlined text-on-surface-variant mr-md" data-icon="language">language</span>
+<div class="flex-1 text-left">
+<p class="text-body-md font-body-md text-on-surface">Language</p>
+</div>
+<span class="text-body-sm font-body-sm text-on-surface-variant mr-sm">English (US)</span>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="chevron_right">chevron_right</span>
+</a>
+</div>
+</section>
+</div>
+<!-- Footer / Sign Out -->
+<div class="p-lg border-t border-outline-variant bg-surface-container">
+<button class="w-full flex items-center justify-center p-sm border border-outline-variant rounded bg-surface hover:bg-surface-variant transition-colors text-error focus:outline-none focus:ring-2 focus:ring-error focus:ring-offset-2 focus:ring-offset-surface-container h-touch-target">
+<span class="material-symbols-outlined mr-sm" data-icon="logout">logout</span>
+<span class="text-label-md font-label-md">Sign Out</span>
+</button>
+<div class="mt-md flex justify-center space-x-md text-label-sm font-label-sm text-on-surface-variant">
+<a class="hover:text-on-surface underline" href="#">Privacy Policy</a>
+<a class="hover:text-on-surface underline" href="#">Terms of Service</a>
+</div>
+<p class="text-center text-label-sm font-label-sm text-on-surface-variant mt-sm opacity-50">v2.4.1 (build 8492)</p>
+</div>
+</aside>
+</body></html>

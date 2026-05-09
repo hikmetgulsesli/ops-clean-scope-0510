@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Productivity Ops - Error State</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#0c0e16",
+                        "surface-container": "#1d1f27",
+                        "on-primary-fixed": "#00174b",
+                        "tertiary-fixed": "#ffdbcd",
+                        "inverse-primary": "#0053db",
+                        "surface-dim": "#11131b",
+                        "surface-tint": "#b4c5ff",
+                        "primary": "#b4c5ff",
+                        "outline": "#8d90a0",
+                        "on-secondary-fixed-variant": "#39485a",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "primary-container": "#2563eb",
+                        "on-tertiary-container": "#ffede6",
+                        "on-secondary-container": "#a7b6cc",
+                        "on-tertiary": "#581e00",
+                        "outline-variant": "#434655",
+                        "on-primary": "#002a78",
+                        "on-background": "#e1e2ed",
+                        "on-tertiary-fixed": "#360f00",
+                        "tertiary-container": "#bc4800",
+                        "secondary-fixed": "#d4e4fa",
+                        "on-error": "#690005",
+                        "secondary": "#b9c8de",
+                        "on-surface-variant": "#c3c6d7",
+                        "primary-fixed": "#dbe1ff",
+                        "secondary-fixed-dim": "#b9c8de",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "tertiary": "#ffb596",
+                        "surface-bright": "#373942",
+                        "background": "#11131b",
+                        "on-secondary-fixed": "#0d1c2d",
+                        "inverse-on-surface": "#2e3039",
+                        "secondary-container": "#39485a",
+                        "surface-container-high": "#282a32",
+                        "error": "#ffb4ab",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "surface": "#11131b",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "surface-container-low": "#191b23",
+                        "on-surface": "#e1e2ed",
+                        "on-error-container": "#ffdad6",
+                        "surface-variant": "#32343d",
+                        "error-container": "#93000a",
+                        "on-secondary": "#233143",
+                        "inverse-surface": "#e1e2ed",
+                        "on-primary-container": "#eeefff",
+                        "surface-container-highest": "#32343d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "gutter": "16px",
+                        "xl": "32px",
+                        "touch-target": "44px",
+                        "margin": "24px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0", "fontWeight": "400" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "0", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400" }],
+                        "body-sm": ["13px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- Top Navigation (Suppressed based on logic - Error State is a dead end/transactional view, prioritizing content canvas) -->
+<!-- Main Content Canvas -->
+<main class="flex-grow flex items-center justify-center p-margin">
+<div class="w-full max-w-md">
+<!-- Error Card -->
+<div class="bg-surface-container rounded-xl border border-outline-variant p-lg shadow-sm flex flex-col items-center text-center">
+<!-- Icon -->
+<div class="w-16 h-16 rounded-full bg-error-container/20 flex items-center justify-center mb-md">
+<span class="material-symbols-outlined text-error text-[32px]" style="font-variation-settings: 'FILL' 1;">
+                        error
+                    </span>
+</div>
+<!-- Messaging -->
+<h1 class="text-headline-md font-headline-md text-on-surface mb-sm">
+                    Failed to load operational data
+                </h1>
+<p class="text-body-md font-body-md text-on-surface-variant mb-lg">
+                    There was a problem retrieving the required data. This could be due to network connectivity issues or a corrupted local cache. Please try again.
+                </p>
+<!-- Actions -->
+<div class="flex flex-col w-full gap-sm">
+<button class="h-[44px] md:h-[36px] w-full bg-primary-container text-on-primary-container rounded flex items-center justify-center gap-sm px-md hover:bg-primary-container/90 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-offset-2 focus:ring-offset-background" type="button">
+<span class="material-symbols-outlined text-[18px]">
+                            refresh
+                        </span>
+<span class="text-label-md font-label-md">Retry Connection</span>
+</button>
+<button class="h-[44px] md:h-[36px] w-full bg-transparent border border-outline-variant text-on-surface rounded flex items-center justify-center gap-sm px-md hover:bg-surface-variant transition-colors focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-offset-2 focus:ring-offset-background" type="button">
+<span class="material-symbols-outlined text-[18px]">
+                            delete_sweep
+                        </span>
+<span class="text-label-md font-label-md">Clear Storage &amp; Reset</span>
+</button>
+</div>
+<!-- Technical Details Accordion (Simulated) -->
+<div class="w-full mt-lg pt-md border-t border-outline-variant text-left">
+<button class="flex items-center justify-between w-full text-label-md font-label-md text-on-surface-variant hover:text-on-surface transition-colors focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-offset-2 focus:ring-offset-surface-container rounded p-xs -ml-xs" type="button">
+<span>View Technical Details</span>
+<span class="material-symbols-outlined text-[18px]">
+                            expand_more
+                        </span>
+</button>
+<!-- Hidden by default in this state, shown here for structure completeness if expanded -->
+<div class="hidden mt-sm p-sm bg-surface-container-lowest rounded border border-outline-variant font-mono text-[10px] leading-tight text-on-surface-variant overflow-x-auto">
+                        ERR_CONNECTION_REFUSED<br/>
+                        Timestamp: 2023-10-27T14:32:01Z<br/>
+                        Endpoint: /api/v1/ops/manifest<br/>
+                        Cache_Status: STALE
+                    </div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Empty State - Productivity Ops</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-lowest": "#0c0e16",
+                      "surface-container": "#1d1f27",
+                      "on-primary-fixed": "#00174b",
+                      "tertiary-fixed": "#ffdbcd",
+                      "inverse-primary": "#0053db",
+                      "surface-dim": "#11131b",
+                      "surface-tint": "#b4c5ff",
+                      "primary": "#b4c5ff",
+                      "outline": "#8d90a0",
+                      "on-secondary-fixed-variant": "#39485a",
+                      "tertiary-fixed-dim": "#ffb596",
+                      "primary-container": "#2563eb",
+                      "on-tertiary-container": "#ffede6",
+                      "on-secondary-container": "#a7b6cc",
+                      "on-tertiary": "#581e00",
+                      "outline-variant": "#434655",
+                      "on-primary": "#002a78",
+                      "on-background": "#e1e2ed",
+                      "on-tertiary-fixed": "#360f00",
+                      "tertiary-container": "#bc4800",
+                      "secondary-fixed": "#d4e4fa",
+                      "on-error": "#690005",
+                      "secondary": "#b9c8de",
+                      "on-surface-variant": "#c3c6d7",
+                      "primary-fixed": "#dbe1ff",
+                      "secondary-fixed-dim": "#b9c8de",
+                      "on-primary-fixed-variant": "#003ea8",
+                      "tertiary": "#ffb596",
+                      "surface-bright": "#373942",
+                      "background": "#11131b",
+                      "on-secondary-fixed": "#0d1c2d",
+                      "inverse-on-surface": "#2e3039",
+                      "secondary-container": "#39485a",
+                      "surface-container-high": "#282a32",
+                      "error": "#ffb4ab",
+                      "on-tertiary-fixed-variant": "#7d2d00",
+                      "surface": "#11131b",
+                      "primary-fixed-dim": "#b4c5ff",
+                      "surface-container-low": "#191b23",
+                      "on-surface": "#e1e2ed",
+                      "on-error-container": "#ffdad6",
+                      "surface-variant": "#32343d",
+                      "error-container": "#93000a",
+                      "on-secondary": "#233143",
+                      "inverse-surface": "#e1e2ed",
+                      "on-primary-container": "#eeefff",
+                      "surface-container-highest": "#32343d"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "base": "4px",
+                      "sm": "8px",
+                      "md": "16px",
+                      "lg": "24px",
+                      "gutter": "16px",
+                      "xl": "32px",
+                      "touch-target": "44px",
+                      "margin": "24px",
+                      "xs": "4px"
+              },
+              "fontFamily": {
+                      "label-sm": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "label-md": [
+                              "Inter"
+                      ],
+                      "headline-sm": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "body-sm": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "label-sm": [
+                              "11px",
+                              {
+                                      "lineHeight": "14px",
+                                      "letterSpacing": "0.02em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-md": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-sm": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-sm": [
+                              "13px",
+                              {
+                                      "lineHeight": "18px",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-md": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      }
+              }
+      },
+          },
+        }
+      </script>
+</head>
+<body class="bg-background text-on-surface h-screen flex overflow-hidden">
+<!-- SideNavBar (Desktop Only) -->
+<nav class="hidden md:flex flex-col h-screen w-64 left-0 top-0 p-md gap-base bg-surface-container-low border-r border-outline-variant shrink-0">
+<!-- Header -->
+<div class="flex items-center gap-sm mb-lg px-sm pt-sm">
+<div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center shrink-0">
+<span class="text-on-primary-container font-headline-sm text-headline-sm font-black">PO</span>
+</div>
+<div class="flex flex-col">
+<span class="text-headline-sm font-headline-sm font-black text-on-surface">Productivity Ops</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Enterprise Console</span>
+</div>
+</div>
+<!-- Main Navigation Tabs -->
+<div class="flex flex-col gap-base flex-1">
+<a class="flex items-center gap-sm px-sm py-sm rounded-lg bg-secondary-container text-on-secondary-container cursor-pointer select-none" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-label-md font-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 cursor-pointer select-none" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="text-label-md font-label-md">Insights</span>
+</a>
+<a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 cursor-pointer select-none" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-label-md font-label-md">Settings</span>
+</a>
+</div>
+<!-- CTA -->
+<div class="mt-auto mb-lg">
+<button class="w-full bg-primary-container text-on-primary-container h-touch-target rounded-lg flex items-center justify-center gap-sm focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-offset-2 focus:ring-offset-background transition-colors hover:bg-opacity-90">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+<span class="text-label-md font-label-md">New Entry</span>
+</button>
+</div>
+<!-- Footer Navigation -->
+<div class="flex flex-col gap-base pt-md border-t border-outline-variant">
+<a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 cursor-pointer select-none" href="#">
+<span class="material-symbols-outlined" data-icon="contact_support">contact_support</span>
+<span class="text-label-md font-label-md">Support</span>
+</a>
+<a class="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 cursor-pointer select-none" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="text-label-md font-label-md">Sign Out</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-full overflow-hidden">
+<!-- TopAppBar (Mobile Only) -->
+<header class="md:hidden flex justify-between items-center h-14 w-full px-gutter ml-auto bg-surface-container border-b border-outline-variant z-40 shrink-0">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center">
+<span class="text-on-primary-container font-headline-sm text-headline-sm font-black">PO</span>
+</div>
+<span class="text-headline-md font-headline-md font-bold text-primary">Productivity Ops</span>
+</div>
+<div class="flex items-center gap-sm">
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-bright transition-colors duration-200 cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-bright transition-colors duration-200 cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+</div>
+</header>
+<!-- Canvas -->
+<div class="flex-1 p-margin overflow-y-auto flex items-center justify-center">
+<div class="max-w-md w-full flex flex-col items-center text-center">
+<!-- Illustrative Graphic Container -->
+<div class="w-48 h-48 mb-lg relative">
+<!-- Abstract geometric elements for dark theme ops -->
+<div class="absolute inset-0 bg-surface-container rounded-full opacity-50 blur-xl"></div>
+<div class="absolute inset-0 border border-outline-variant rounded-full border-dashed animate-[spin_20s_linear_infinite]"></div>
+<div class="absolute inset-4 border border-outline-variant rounded-full"></div>
+<div class="absolute inset-0 flex items-center justify-center text-surface-variant">
+<span class="material-symbols-outlined text-[80px]" data-icon="topic" data-weight="fill" style="font-variation-settings: 'FILL' 1;">topic</span>
+</div>
+</div>
+<!-- Text Content -->
+<h1 class="text-headline-lg font-headline-lg text-on-surface mb-sm">No Records Found</h1>
+<p class="text-body-md font-body-md text-on-surface-variant mb-xl max-w-sm">
+                    Your database is currently empty. Start building your operational workflows by creating your first entry.
+                </p>
+<!-- Call to Action -->
+<button class="bg-primary-container text-white h-touch-target px-lg rounded flex items-center justify-center gap-sm focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-offset-2 focus:ring-offset-background transition-colors hover:bg-opacity-90">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+<span class="text-label-md font-label-md">Create First Entry</span>
+</button>
+</div>
+</div>
+</main>
+</body></html>

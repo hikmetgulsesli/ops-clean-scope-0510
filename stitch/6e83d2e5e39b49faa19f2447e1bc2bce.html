@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Productivity Ops - Detail View</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#0c0e16",
+                        "surface-container": "#1d1f27",
+                        "on-primary-fixed": "#00174b",
+                        "tertiary-fixed": "#ffdbcd",
+                        "inverse-primary": "#0053db",
+                        "surface-dim": "#11131b",
+                        "surface-tint": "#b4c5ff",
+                        "primary": "#b4c5ff",
+                        "outline": "#8d90a0",
+                        "on-secondary-fixed-variant": "#39485a",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "primary-container": "#2563eb",
+                        "on-tertiary-container": "#ffede6",
+                        "on-secondary-container": "#a7b6cc",
+                        "on-tertiary": "#581e00",
+                        "outline-variant": "#434655",
+                        "on-primary": "#002a78",
+                        "on-background": "#e1e2ed",
+                        "on-tertiary-fixed": "#360f00",
+                        "tertiary-container": "#bc4800",
+                        "secondary-fixed": "#d4e4fa",
+                        "on-error": "#690005",
+                        "secondary": "#b9c8de",
+                        "on-surface-variant": "#c3c6d7",
+                        "primary-fixed": "#dbe1ff",
+                        "secondary-fixed-dim": "#b9c8de",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "tertiary": "#ffb596",
+                        "surface-bright": "#373942",
+                        "background": "#11131b",
+                        "on-secondary-fixed": "#0d1c2d",
+                        "inverse-on-surface": "#2e3039",
+                        "secondary-container": "#39485a",
+                        "surface-container-high": "#282a32",
+                        "error": "#ffb4ab",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "surface": "#11131b",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "surface-container-low": "#191b23",
+                        "on-surface": "#e1e2ed",
+                        "on-error-container": "#ffdad6",
+                        "surface-variant": "#32343d",
+                        "error-container": "#93000a",
+                        "on-secondary": "#233143",
+                        "inverse-surface": "#e1e2ed",
+                        "on-primary-container": "#eeefff",
+                        "surface-container-highest": "#32343d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "gutter": "16px",
+                        "xl": "32px",
+                        "touch-target": "44px",
+                        "margin": "24px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0", "fontWeight": "400" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "0", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400" }],
+                        "body-sm": ["13px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex">
+<!-- Nav Shell Suppressed due to Detail View context -> Task-Focused sub-page with implicit back action -->
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col h-screen overflow-hidden">
+<!-- Contextual Header for Detail View -->
+<header class="bg-surface-container dark:bg-surface-container border-b border-outline-variant dark:border-outline-variant flex justify-between items-center h-14 w-full px-gutter z-40">
+<div class="flex items-center gap-md">
+<button class="flex items-center gap-sm text-on-surface-variant hover:text-primary transition-colors cursor-pointer select-none">
+<span class="material-symbols-outlined" data-icon="arrow_back" data-weight="regular">arrow_back</span>
+<span class="text-label-md font-label-md">Back to Dashboard</span>
+</button>
+<div class="h-4 w-px bg-outline-variant"></div>
+<div class="text-headline-sm font-headline-sm text-primary dark:text-primary">
+                    Record ID: #ORD-2023-089
+                </div>
+</div>
+<div class="flex items-center gap-md">
+<button class="flex items-center gap-sm px-md h-9 border border-outline-variant rounded-DEFAULT text-on-surface hover:bg-surface-bright hover:border-primary transition-colors focus:ring-2 focus:ring-primary-container focus:outline-none">
+<span class="material-symbols-outlined text-[18px]" data-icon="download" data-weight="regular">download</span>
+<span class="text-label-md font-label-md">Export</span>
+</button>
+<button class="flex items-center gap-sm px-md h-9 bg-primary-container text-on-primary-container rounded-DEFAULT hover:opacity-90 transition-opacity focus:ring-2 focus:ring-primary-container focus:ring-offset-2 focus:ring-offset-surface focus:outline-none">
+<span class="material-symbols-outlined text-[18px]" data-icon="edit" data-weight="regular">edit</span>
+<span class="text-label-md font-label-md">Edit Record</span>
+</button>
+<button class="flex items-center gap-sm px-md h-9 border border-error text-error rounded-DEFAULT hover:bg-error-container hover:text-on-error-container transition-colors focus:ring-2 focus:ring-error focus:outline-none">
+<span class="material-symbols-outlined text-[18px]" data-icon="delete" data-weight="regular">delete</span>
+<span class="text-label-md font-label-md">Delete</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Canvas -->
+<main class="flex-1 overflow-y-auto p-margin">
+<div class="max-w-5xl mx-auto space-y-lg">
+<!-- Meta Summary Bento -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-md">
+<!-- Status Card -->
+<div class="bg-surface-container border border-outline-variant rounded-lg p-md flex flex-col justify-between h-32">
+<span class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Current Status</span>
+<div class="flex items-center gap-sm">
+<span class="flex items-center justify-center h-8 px-3 rounded-full bg-[#10b981]/10 text-[#10b981] border border-[#10b981]/20">
+<span class="w-2 h-2 rounded-full bg-[#10b981] mr-2"></span>
+<span class="text-label-md font-label-md">Completed</span>
+</span>
+</div>
+</div>
+<!-- Assigned To -->
+<div class="bg-surface-container border border-outline-variant rounded-lg p-md flex flex-col justify-between h-32">
+<span class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Assigned Owner</span>
+<div class="flex items-center gap-md">
+<img alt="Avatar" class="w-10 h-10 rounded-full border border-outline-variant" data-alt="A professional headshot of a person with short hair, wearing a dark collared shirt against a blurred neutral background. Soft, even lighting highlights the subject's face. The mood is corporate, approachable, and modern. The overall aesthetic fits a high-end enterprise software application interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIdptm_2RtlaR5QwPGZyrtxDAtNDY8lUFb4iRkkq2hp3LdVgLQ6Kc7wK9BodxAXp9_jB0JHtqRwfIXgMaLTE4dBlX9z-HGuvZ1zBfiw3fBaePdUQYtQfL7Cvif05SXD2N-nh5EikYcBA6lfv6Fj5ZnJCk5DDHKfMXcs8ywD6w38Ck2fehb3ZiYZ12vsE5Ks_3X3GyUcWzK7pngWRLhK3nT5eJ2-N01PlEMGiwGCwmZcipMxttfLQAE1D09dJ9T94DmK20Esy42_eY"/>
+<div>
+<div class="text-body-md font-headline-sm text-on-surface">Alex Mercer</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant">Logistics Lead</div>
+</div>
+</div>
+</div>
+<!-- Timestamps -->
+<div class="bg-surface-container border border-outline-variant rounded-lg p-md flex flex-col justify-between h-32 md:col-span-2">
+<span class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Lifecycle Tracking</span>
+<div class="grid grid-cols-2 gap-md">
+<div>
+<div class="text-label-sm font-label-sm text-on-surface-variant mb-1">Created At</div>
+<div class="text-body-md font-body-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-outline" data-icon="calendar_today">calendar_today</span>
+                                    Oct 24, 2023 09:41 AM
+                                </div>
+</div>
+<div>
+<div class="text-label-sm font-label-sm text-on-surface-variant mb-1">Last Updated</div>
+<div class="text-body-md font-body-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-outline" data-icon="update">update</span>
+                                    Oct 25, 2023 14:22 PM
+                                </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Detailed Fields Section -->
+<div class="bg-surface-container border border-outline-variant rounded-lg p-lg">
+<h2 class="text-headline-md font-headline-md text-on-surface mb-lg pb-sm border-b border-outline-variant">Payload Details</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-y-lg gap-x-xl">
+<!-- Field Group 1 -->
+<div class="space-y-sm">
+<label class="text-label-sm font-label-sm text-on-surface-variant block uppercase tracking-wider">Client Organization</label>
+<div class="text-body-lg font-body-lg text-on-surface bg-surface-dim p-sm rounded border border-surface-variant">
+                                Acme Corporation Logistics
+                            </div>
+</div>
+<!-- Field Group 2 -->
+<div class="space-y-sm">
+<label class="text-label-sm font-label-sm text-on-surface-variant block uppercase tracking-wider">Project Category</label>
+<div class="text-body-lg font-body-lg text-on-surface bg-surface-dim p-sm rounded border border-surface-variant">
+                                Infrastructure Deployment
+                            </div>
+</div>
+<!-- Field Group 3 -->
+<div class="space-y-sm">
+<label class="text-label-sm font-label-sm text-on-surface-variant block uppercase tracking-wider">Primary Region</label>
+<div class="text-body-lg font-body-lg text-on-surface bg-surface-dim p-sm rounded border border-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-outline" data-icon="public">public</span>
+                                North America (US-East-1)
+                            </div>
+</div>
+<!-- Field Group 4 -->
+<div class="space-y-sm">
+<label class="text-label-sm font-label-sm text-on-surface-variant block uppercase tracking-wider">Priority Level</label>
+<div class="text-body-lg font-body-lg text-on-surface bg-surface-dim p-sm rounded border border-surface-variant">
+                                High (Tier 1)
+                            </div>
+</div>
+<!-- Full Width Description -->
+<div class="space-y-sm md:col-span-2">
+<label class="text-label-sm font-label-sm text-on-surface-variant block uppercase tracking-wider">Execution Summary Notes</label>
+<div class="text-body-md font-body-md text-on-surface bg-surface-dim p-md rounded border border-surface-variant min-h-[120px]">
+                                Deployment scheduled for Q4 maintenance window. Initial load testing completed with satisfactory results across primary nodes. Requires sign-off from InfoSec before final push to production environment. Note: Hardware provisioning delayed by 2 days due to upstream supply chain constraints, mitigating through localized redundant clusters.
+                            </div>
+</div>
+</div>
+</div>
+<!-- Audit Log / Secondary Data -->
+<div class="bg-surface-container border border-outline-variant rounded-lg overflow-hidden">
+<div class="p-md border-b border-outline-variant bg-surface-container-high">
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Recent System Audit</h3>
+</div>
+<div class="divide-y divide-outline-variant">
+<!-- Log Entry -->
+<div class="p-md flex items-start gap-md hover:bg-surface-variant transition-colors">
+<div class="mt-1 text-primary">
+<span class="material-symbols-outlined text-[20px]" data-icon="check_circle">check_circle</span>
+</div>
+<div>
+<div class="text-body-md font-body-md text-on-surface">Status updated to 'Completed'</div>
+<div class="text-label-sm font-label-sm text-on-surface-variant mt-1">by System Automated Process — Oct 25, 2023 14:22 PM</div>
+</div>
+</div>
+<!-- Log Entry -->
+<div class="p-md flex items-start gap-md hover:bg-surface-variant transition-colors">
+<div class="mt-1 text-secondary">
+<span class="material-symbols-outlined text-[20px]" data-icon="edit_note">edit_note</span>
+</div>
+<div>
+<div class="text-body-md font-body-md text-on-surface">Execution Summary Notes modified</div>
+<div class="text-label-sm font-label-sm text-on-surface-variant mt-1">by Alex Mercer — Oct 25, 2023 10:15 AM</div>
+</div>
+</div>
+<!-- Log Entry -->
+<div class="p-md flex items-start gap-md hover:bg-surface-variant transition-colors">
+<div class="mt-1 text-secondary">
+<span class="material-symbols-outlined text-[20px]" data-icon="person_add">person_add</span>
+</div>
+<div>
+<div class="text-body-md font-body-md text-on-surface">Assigned to Alex Mercer</div>
+<div class="text-label-sm font-label-sm text-on-surface-variant mt-1">by Sarah Jenkins — Oct 24, 2023 09:45 AM</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
