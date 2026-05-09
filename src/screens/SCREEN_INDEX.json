@@ -1,0 +1,74 @@
+[
+  {
+    "screenId": "b0a86df24701479494932594b0ca5259",
+    "title": "Create / Edit Record",
+    "componentName": "CreateEditRecord",
+    "file": "src/screens/CreateEditRecord.tsx",
+    "buttons": 3,
+    "inputs": 1,
+    "links": 0
+  },
+  {
+    "screenId": "ce631fbaa0d343be88a5a6c77c39b702",
+    "title": "No Records Found",
+    "componentName": "NoRecordsFound",
+    "file": "src/screens/NoRecordsFound.tsx",
+    "buttons": 4,
+    "inputs": 0,
+    "links": 5
+  },
+  {
+    "screenId": "32776b0ff9ea43948d3fd3918bb6f78b",
+    "title": "System Error State",
+    "componentName": "SystemErrorState",
+    "file": "src/screens/SystemErrorState.tsx",
+    "buttons": 3,
+    "inputs": 0,
+    "links": 0
+  },
+  {
+    "screenId": "6e83d2e5e39b49faa19f2447e1bc2bce",
+    "title": "Record Details",
+    "componentName": "RecordDetails",
+    "file": "src/screens/RecordDetails.tsx",
+    "buttons": 4,
+    "inputs": 0,
+    "links": 0
+  },
+  {
+    "screenId": "aed7feddf8b34bb28b3df99c6a285023",
+    "title": "User Profile Panel",
+    "componentName": "UserProfilePanel",
+    "file": "src/screens/UserProfilePanel.tsx",
+    "buttons": 3,
+    "inputs": 0,
+    "links": 6
+  },
+  {
+    "screenId": "17465b355eeb4f88bc1cfc0b326b75d7",
+    "title": "Settings & Preferences",
+    "componentName": "SettingsPreferences",
+    "file": "src/screens/SettingsPreferences.tsx",
+    "buttons": 5,
+    "inputs": 3,
+    "links": 5
+  },
+  {
+    "screenId": "381dcbf9cc3f4ca1b2d7a6f11bc067ab",
+    "title": "Insights & Metrics",
+    "componentName": "InsightsMetrics",
+    "file": "src/screens/InsightsMetrics.tsx",
+    "buttons": 5,
+    "inputs": 1,
+    "links": 8
+  },
+  {
+    "screenId": "5ac7078872e24e8b93bda7ad2ccc8bb6",
+    "title": "Dashboard",
+    "componentName": "Dashboard",
+    "file": "src/screens/Dashboard.tsx",
+    "buttons": 18,
+    "inputs": 8,
+    "links": 5
+  }
+]
