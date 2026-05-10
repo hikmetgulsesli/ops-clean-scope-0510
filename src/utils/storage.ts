@@ -32,12 +32,27 @@ export function loadFromStorage(): StorageData | null {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return null;
-    const parsed = JSON.parse(raw) as StorageData;
-    if (parsed.version !== CURRENT_VERSION) {
-      // Migrate or reset on version mismatch
-      return null;
-    }
-    return parsed;
+    const parsed = JSON.parse(raw) as unknown;
+    if (!parsed || typeof parsed !== 'object') return null;
+    const data = parsed as Record<string, unknown>;
+    if (typeof data.version !== 'number' || data.version !== CURRENT_VERSION) return null;
+    if (!Array.isArray(data.records)) return null;
+    if (!data.settings || typeof data.settings !== 'object') return null;
+    const settings = data.settings as Record<string, unknown>;
+    if (typeof settings.systemAlerts !== 'boolean') return null;
+    if (typeof settings.dailyDigest !== 'boolean') return null;
+    if (typeof settings.weeklyReport !== 'boolean') return null;
+    if (typeof settings.darkTheme !== 'boolean') return null;
+    return {
+      records: data.records as StorageData['records'],
+      settings: {
+        systemAlerts: settings.systemAlerts,
+        dailyDigest: settings.dailyDigest,
+        weeklyReport: settings.weeklyReport,
+        darkTheme: settings.darkTheme,
+      },
+      version: CURRENT_VERSION,
+    };
   } catch {
     return null;
   }

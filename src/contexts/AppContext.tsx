@@ -121,7 +121,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const addRecord = useCallback((record: Omit<OpsRecord, 'id' | 'lastUpdated'>) => {
-    const id = `OP-${Math.floor(7000 + Math.random() * 1000)}`;
+    const id = `OP-${crypto.randomUUID().replace(/-/g, '').slice(0, 4).toUpperCase()}`;
     const newRecord: OpsRecord = {
       ...record,
       id,
@@ -153,11 +153,16 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const selectRecord = useCallback((id: string | null) => {
-    setState((prev) => ({
-      ...prev,
-      selectedRecordId: id,
-      currentView: id ? 'record-details' : 'dashboard',
-    }));
+    setState((prev) => {
+      if (id && !prev.records.find((r) => r.id === id)) {
+        return { ...prev, selectedRecordId: null, currentView: 'dashboard' };
+      }
+      return {
+        ...prev,
+        selectedRecordId: id,
+        currentView: id ? 'record-details' : 'dashboard',
+      };
+    });
   }, []);
 
   const clearError = useCallback(() => {
