@@ -8,18 +8,10 @@
 // 4. Replace placeholder data with props/state
 
 import { useState } from "react";
-import { useAppContext } from "../contexts/AppContext";
 
 interface NoRecordsFoundProps {}
 
 export function NoRecordsFound(props: NoRecordsFoundProps) {
-  const { navigate, selectRecord } = useAppContext();
-
-  const handleCreateEntry = () => {
-    selectRecord(null);
-    navigate('create-record');
-  };
-
   return (
     <>
       {/* SideNavBar (Desktop Only) */}
@@ -36,33 +28,33 @@ export function NoRecordsFound(props: NoRecordsFoundProps) {
       </div>
       {/* Main Navigation Tabs */}
       <div className="flex flex-col gap-base flex-1">
-      <a className="flex items-center gap-sm px-sm py-sm rounded-lg bg-secondary-container text-on-secondary-container cursor-pointer select-none" href="#" onClick={(e) => { e.preventDefault(); navigate('dashboard'); }}>
+      <a className="flex items-center gap-sm px-sm py-sm rounded-lg bg-secondary-container text-on-secondary-container cursor-pointer select-none" href="#">
       <span className="material-symbols-outlined" data-icon="dashboard">dashboard</span>
       <span className="text-label-md font-label-md">Dashboard</span>
       </a>
-      <a className="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 cursor-pointer select-none" href="#" onClick={(e) => { e.preventDefault(); navigate('insights'); }}>
+      <a className="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 cursor-pointer select-none" href="#">
       <span className="material-symbols-outlined" data-icon="analytics">analytics</span>
       <span className="text-label-md font-label-md">Insights</span>
       </a>
-      <a className="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 cursor-pointer select-none" href="#" onClick={(e) => { e.preventDefault(); navigate('settings'); }}>
+      <a className="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 cursor-pointer select-none" href="#">
       <span className="material-symbols-outlined" data-icon="settings">settings</span>
       <span className="text-label-md font-label-md">Settings</span>
       </a>
       </div>
       {/* CTA */}
       <div className="mt-auto mb-lg">
-      <button className="w-full bg-primary-container text-on-primary-container h-touch-target rounded-lg flex items-center justify-center gap-sm focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-offset-2 focus:ring-offset-background transition-colors hover:bg-opacity-90" onClick={handleCreateEntry}>
+      <button className="w-full bg-primary-container text-on-primary-container h-touch-target rounded-lg flex items-center justify-center gap-sm focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-offset-2 focus:ring-offset-background transition-colors hover:bg-opacity-90">
       <span className="material-symbols-outlined" data-icon="add">add</span>
       <span className="text-label-md font-label-md">New Entry</span>
       </button>
       </div>
       {/* Footer Navigation */}
       <div className="flex flex-col gap-base pt-md border-t border-outline-variant">
-      <a className="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 cursor-pointer select-none" href="#" onClick={(e) => { e.preventDefault(); navigate('settings'); }}>
+      <a className="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 cursor-pointer select-none" href="#">
       <span className="material-symbols-outlined" data-icon="contact_support">contact_support</span>
       <span className="text-label-md font-label-md">Support</span>
       </a>
-      <a className="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 cursor-pointer select-none" href="#" onClick={(e) => { e.preventDefault(); navigate('dashboard'); }}>
+      <a className="flex items-center gap-sm px-sm py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-all duration-150 cursor-pointer select-none" href="#">
       <span className="material-symbols-outlined" data-icon="logout">logout</span>
       <span className="text-label-md font-label-md">Sign Out</span>
       </a>
@@ -79,10 +71,10 @@ export function NoRecordsFound(props: NoRecordsFoundProps) {
       <span className="text-headline-md font-headline-md font-bold text-primary">Productivity Ops</span>
       </div>
       <div className="flex items-center gap-sm">
-      <button aria-label="Notifications" className="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-bright transition-colors duration-200 cursor-pointer active:opacity-80" onClick={() => navigate('profile')}>
+      <button className="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-bright transition-colors duration-200 cursor-pointer active:opacity-80">
       <span className="material-symbols-outlined" data-icon="notifications">notifications</span>
       </button>
-      <button aria-label="Help" className="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-bright transition-colors duration-200 cursor-pointer active:opacity-80" onClick={() => navigate('settings')}>
+      <button className="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-bright transition-colors duration-200 cursor-pointer active:opacity-80">
       <span className="material-symbols-outlined" data-icon="help_outline">help_outline</span>
       </button>
       </div>
@@ -106,7 +98,7 @@ export function NoRecordsFound(props: NoRecordsFoundProps) {
                           Your database is currently empty. Start building your operational workflows by creating your first entry.
                       </p>
       {/* Call to Action */}
-      <button className="bg-primary-container text-white h-touch-target px-lg rounded flex items-center justify-center gap-sm focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-offset-2 focus:ring-offset-background transition-colors hover:bg-opacity-90" onClick={handleCreateEntry}>
+      <button className="bg-primary-container text-white h-touch-target px-lg rounded flex items-center justify-center gap-sm focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-offset-2 focus:ring-offset-background transition-colors hover:bg-opacity-90">
       <span className="material-symbols-outlined" data-icon="add">add</span>
       <span className="text-label-md font-label-md">Create First Entry</span>
       </button>

@@ -14,8 +14,9 @@ interface SystemErrorStateProps {}
 
 export function SystemErrorState(props: SystemErrorStateProps) {
   const { error, retryLoad, resetAll } = useAppContext();
-  const [showDetails, setShowDetails] = useState(false);
-  const [timestamp] = useState(() => new Date().toISOString());
+  const [detailsOpen, setDetailsOpen] = useState(false);
+
+  const timestamp = new Date().toISOString();
 
   return (
     <>
@@ -40,13 +41,13 @@ export function SystemErrorState(props: SystemErrorStateProps) {
                       </p>
       {/* Actions */}
       <div className="flex flex-col w-full gap-sm">
-      <button className="h-[44px] md:h-[36px] w-full bg-primary-container text-on-primary-container rounded flex items-center justify-center gap-sm px-md hover:bg-primary-container/90 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-offset-2 focus:ring-offset-background" onClick={retryLoad} type="button">
+      <button onClick={retryLoad} className="h-[44px] md:h-[36px] w-full bg-primary-container text-on-primary-container rounded flex items-center justify-center gap-sm px-md hover:bg-primary-container/90 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-offset-2 focus:ring-offset-background" type="button">
       <span className="material-symbols-outlined text-[18px]">
                                   refresh
                               </span>
       <span className="text-label-md font-label-md">Retry Connection</span>
       </button>
-      <button className="h-[44px] md:h-[36px] w-full bg-transparent border border-outline-variant text-on-surface rounded flex items-center justify-center gap-sm px-md hover:bg-surface-variant transition-colors focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-offset-2 focus:ring-offset-background" onClick={resetAll} type="button">
+      <button onClick={resetAll} className="h-[44px] md:h-[36px] w-full bg-transparent border border-outline-variant text-on-surface rounded flex items-center justify-center gap-sm px-md hover:bg-surface-variant transition-colors focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-offset-2 focus:ring-offset-background" type="button">
       <span className="material-symbols-outlined text-[18px]">
                                   delete_sweep
                               </span>
@@ -55,15 +56,15 @@ export function SystemErrorState(props: SystemErrorStateProps) {
       </div>
       {/* Technical Details Accordion (Simulated) */}
       <div className="w-full mt-lg pt-md border-t border-outline-variant text-left">
-      <button aria-label={showDetails ? "Hide Technical Details" : "View Technical Details"} className="flex items-center justify-between w-full text-label-md font-label-md text-on-surface-variant hover:text-on-surface transition-colors focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-offset-2 focus:ring-offset-surface-container rounded p-xs -ml-xs" onClick={() => setShowDetails(!showDetails)} type="button">
-      <span>{showDetails ? "Hide Technical Details" : "View Technical Details"}</span>
-      <span className={`material-symbols-outlined text-[18px] transition-transform ${showDetails ? "rotate-180" : ""}`}>
+      <button onClick={() => setDetailsOpen(!detailsOpen)} aria-label={detailsOpen ? "Hide Technical Details" : "View Technical Details"} className="flex items-center justify-between w-full text-label-md font-label-md text-on-surface-variant hover:text-on-surface transition-colors focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-offset-2 focus:ring-offset-surface-container rounded p-xs -ml-xs" type="button">
+      <span>{detailsOpen ? "Hide Technical Details" : "View Technical Details"}</span>
+      <span className="material-symbols-outlined text-[18px]">
                                   expand_more
                               </span>
       </button>
       {/* Hidden by default in this state, shown here for structure completeness if expanded */}
-      <div className={`mt-sm p-sm bg-surface-container-lowest rounded border border-outline-variant font-mono text-[10px] leading-tight text-on-surface-variant overflow-x-auto transition-all ${showDetails ? "" : "hidden"}`}>
-                              {error || "ERR_CONNECTION_REFUSED"}<br />
+      <div className={`mt-sm p-sm bg-surface-container-lowest rounded border border-outline-variant font-mono text-[10px] leading-tight text-on-surface-variant overflow-x-auto transition-all ${detailsOpen ? '' : 'hidden'}`}>
+                              {error || 'ERR_CONNECTION_REFUSED'}<br />
                               Timestamp: {timestamp}<br />
                               Endpoint: /api/v1/ops/manifest<br />
                               Cache_Status: STALE
