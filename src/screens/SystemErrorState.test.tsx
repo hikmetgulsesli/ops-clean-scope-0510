@@ -41,14 +41,15 @@ describe('SystemErrorState', () => {
   it('toggles technical details accordion', () => {
     setup({ error: 'ERR_TEST' });
     const detailsBtn = screen.getByLabelText('View Technical Details');
-    expect(screen.queryByText(/ERR_TEST/)).not.toBeInTheDocument();
+    const detailsPanel = screen.getByText(/ERR_TEST/).closest('div[class*="transition-all"]') as HTMLElement;
+    expect(detailsPanel).toHaveClass('hidden');
 
     fireEvent.click(detailsBtn);
-    expect(screen.getByText(/ERR_TEST/)).toBeInTheDocument();
+    expect(detailsPanel).not.toHaveClass('hidden');
     expect(screen.getByLabelText('Hide Technical Details')).toBeInTheDocument();
 
     fireEvent.click(detailsBtn);
-    expect(screen.queryByText(/ERR_TEST/)).not.toBeInTheDocument();
+    expect(detailsPanel).toHaveClass('hidden');
   });
 
   it('shows dynamic timestamp in technical details', () => {

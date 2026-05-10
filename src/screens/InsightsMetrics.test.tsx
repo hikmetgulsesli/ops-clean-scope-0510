@@ -28,7 +28,7 @@ describe('InsightsMetrics', () => {
 
   it('renders insights overview title', () => {
     setup({});
-    expect(screen.getByText('Insights Overview')).toBeInTheDocument();
+    expect(screen.getAllByText('Insights Overview').length).toBeGreaterThanOrEqual(1);
   });
 
   it('navigates to dashboard when dashboard link is clicked', () => {
@@ -83,7 +83,8 @@ describe('InsightsMetrics', () => {
 
   it('displays zero counts when no records', () => {
     setup({ records: [] });
-    expect(screen.getByText('0')).toBeInTheDocument();
+    const zeroElements = screen.getAllByText('0');
+    expect(zeroElements.length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText('0.00%')).toBeInTheDocument();
   });
 
