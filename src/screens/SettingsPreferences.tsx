@@ -8,10 +8,20 @@
 // 4. Replace placeholder data with props/state
 
 import { useState } from "react";
+import { useAppContext } from "../contexts/AppContext";
 
 interface SettingsPreferencesProps {}
 
 export function SettingsPreferences(props: SettingsPreferencesProps) {
+  const { navigate, updateSettings, settings, resetAll } = useAppContext();
+  const [checking, setChecking] = useState(false);
+  const [confirmClear, setConfirmClear] = useState(false);
+
+  const handleCheck = () => {
+    setChecking(true);
+    setTimeout(() => setChecking(false), 1500);
+  };
+
   return (
     <>
       {/* SideNavBar Component */}
@@ -27,33 +37,33 @@ export function SettingsPreferences(props: SettingsPreferencesProps) {
       </div>
       </div>
       {/* CTA */}
-      <button className="mb-lg h-[36px] bg-primary-container text-white text-label-md font-label-md rounded flex items-center justify-center gap-sm hover:bg-opacity-90 transition-colors focus:ring-2 focus:ring-primary-container focus:ring-offset-2 focus:ring-offset-surface-container-low">
+      <button className="mb-lg h-[36px] bg-primary-container text-white text-label-md font-label-md rounded flex items-center justify-center gap-sm hover:bg-opacity-90 transition-colors focus:ring-2 focus:ring-primary-container focus:ring-offset-2 focus:ring-offset-surface-container-low" onClick={() => { navigate('create-record'); }}>
       <span className="material-symbols-outlined" style={{fontSize: "18px"}}>add</span>
                   New Entry
               </button>
       {/* Main Navigation */}
       <div className="flex flex-col gap-xs flex-1">
-      <a className="flex items-center gap-md px-sm py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 cursor-pointer select-none text-label-md font-label-md focus:ring-2 focus:ring-primary-container" href="#">
+      <a className="flex items-center gap-md px-sm py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 cursor-pointer select-none text-label-md font-label-md focus:ring-2 focus:ring-primary-container" href="#" onClick={(e) => { e.preventDefault(); navigate('dashboard'); }}>
       <span className="material-symbols-outlined" data-icon="dashboard">dashboard</span>
       <span>Dashboard</span>
       </a>
-      <a className="flex items-center gap-md px-sm py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 cursor-pointer select-none text-label-md font-label-md focus:ring-2 focus:ring-primary-container" href="#">
+      <a className="flex items-center gap-md px-sm py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 cursor-pointer select-none text-label-md font-label-md focus:ring-2 focus:ring-primary-container" href="#" onClick={(e) => { e.preventDefault(); navigate('insights'); }}>
       <span className="material-symbols-outlined" data-icon="analytics">analytics</span>
       <span>Insights</span>
       </a>
       {/* Active Tab: Settings */}
-      <a className="flex items-center gap-md px-sm py-sm rounded-lg bg-secondary-container dark:bg-secondary-container text-on-secondary-container dark:text-on-secondary-container transition-all duration-150 cursor-pointer select-none text-label-md font-label-md focus:ring-2 focus:ring-primary-container" href="#">
+      <a className="flex items-center gap-md px-sm py-sm rounded-lg bg-secondary-container dark:bg-secondary-container text-on-secondary-container dark:text-on-secondary-container transition-all duration-150 cursor-pointer select-none text-label-md font-label-md focus:ring-2 focus:ring-primary-container" href="#" onClick={(e) => { e.preventDefault(); navigate('settings'); }}>
       <span className="material-symbols-outlined" data-icon="settings" data-weight="fill" style={{fontVariationSettings: "'FILL' 1"}}>settings</span>
       <span>Settings</span>
       </a>
       </div>
       {/* Footer Navigation */}
       <div className="flex flex-col gap-xs mt-auto pt-md border-t border-outline-variant">
-      <a className="flex items-center gap-md px-sm py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 cursor-pointer select-none text-label-md font-label-md focus:ring-2 focus:ring-primary-container" href="#">
+      <a className="flex items-center gap-md px-sm py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 cursor-pointer select-none text-label-md font-label-md focus:ring-2 focus:ring-primary-container" href="#" onClick={(e) => { e.preventDefault(); navigate('settings'); }}>
       <span className="material-symbols-outlined" data-icon="contact_support">contact_support</span>
       <span>Support</span>
       </a>
-      <a className="flex items-center gap-md px-sm py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 cursor-pointer select-none text-label-md font-label-md focus:ring-2 focus:ring-primary-container" href="#">
+      <a className="flex items-center gap-md px-sm py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 cursor-pointer select-none text-label-md font-label-md focus:ring-2 focus:ring-primary-container" href="#" onClick={(e) => { e.preventDefault(); resetAll(); }}>
       <span className="material-symbols-outlined" data-icon="logout">logout</span>
       <span>Sign Out</span>
       </a>
@@ -73,7 +83,7 @@ export function SettingsPreferences(props: SettingsPreferencesProps) {
       <button className="hover:bg-surface-bright dark:hover:bg-surface-bright transition-colors duration-200 p-sm rounded-full focus:ring-2 focus:ring-primary-container">
       <span className="material-symbols-outlined" data-icon="help_outline">help_outline</span>
       </button>
-      <div className="w-8 h-8 rounded-full overflow-hidden bg-surface-variant border border-outline-variant ml-sm">
+      <div className="w-8 h-8 rounded-full overflow-hidden bg-surface-variant border border-outline-variant ml-sm cursor-pointer" aria-label="Open profile" role="button" tabIndex={0} onClick={() => navigate('profile')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); navigate('profile'); } }}>
       <img alt="User Profile" className="w-full h-full object-cover" data-alt="A professional headshot of a person looking directly at the camera. The background is a plain, dark studio backdrop. The lighting is soft and flattering, highlighting the subject's features subtly. The overall tone is corporate and approachable." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeXIdxW6_nhik3hQDlwGX_ERgCwc3R0qbfMqLUwsfyhAaEUFCykw2bSLgNmNbblDeWP9MolQp7OixmtY20Ygv-zge0SCFdvD-jGDGPZk7SdPILTweKCTLVgK1wwRRvw3vwAzndoOtGrAWAiqoPHSGeW2ewIj6ZCD5E1-uFo0Oe-VmtqAMoqjTuqxOOB-_No9kL_UYP51cnJ4eriSeh_begVkTDXda6PfDrnXuaoy7FPUK_intJ_nucc-a8QJY_rJxWxBonzBjgJKI" />
       </div>
       </div>
@@ -102,7 +112,7 @@ export function SettingsPreferences(props: SettingsPreferencesProps) {
       <p className="text-body-sm font-body-sm text-on-surface-variant">Critical system updates and operational alerts.</p>
       </div>
       <label className="relative inline-flex items-center cursor-pointer">
-      <input checked={true} className="sr-only peer" type="checkbox" value="" />
+      <input className="sr-only peer" type="checkbox" checked={settings.systemAlerts} onChange={() => updateSettings({ systemAlerts: !settings.systemAlerts })} />
       <div className="w-11 h-6 bg-surface-variant peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary-container rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container border border-outline-variant"></div>
       </label>
       </div>
@@ -113,7 +123,7 @@ export function SettingsPreferences(props: SettingsPreferencesProps) {
       <p className="text-body-sm font-body-sm text-on-surface-variant">A summary of the previous day's metrics.</p>
       </div>
       <label className="relative inline-flex items-center cursor-pointer">
-      <input className="sr-only peer" type="checkbox" value="" />
+      <input className="sr-only peer" type="checkbox" checked={settings.dailyDigest} onChange={() => updateSettings({ dailyDigest: !settings.dailyDigest })} />
       <div className="w-11 h-6 bg-surface-variant peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary-container rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container border border-outline-variant"></div>
       </label>
       </div>
@@ -124,7 +134,7 @@ export function SettingsPreferences(props: SettingsPreferencesProps) {
       <p className="text-body-sm font-body-sm text-on-surface-variant">Automated comprehensive PDF reports.</p>
       </div>
       <label className="relative inline-flex items-center cursor-pointer">
-      <input checked={true} className="sr-only peer" type="checkbox" value="" />
+      <input className="sr-only peer" type="checkbox" checked={settings.weeklyReport} onChange={() => updateSettings({ weeklyReport: !settings.weeklyReport })} />
       <div className="w-11 h-6 bg-surface-variant peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary-container rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container border border-outline-variant"></div>
       </label>
       </div>
@@ -152,9 +162,9 @@ export function SettingsPreferences(props: SettingsPreferencesProps) {
       <span className="inline-flex items-center px-2 py-1 rounded bg-secondary-container text-on-secondary-container text-label-sm font-label-sm border border-outline-variant">Production</span>
       </div>
       </div>
-      <button className="mt-lg w-full h-[36px] bg-transparent border border-[#334155] text-on-surface text-label-md font-label-md rounded flex items-center justify-center gap-sm hover:bg-[#334155] transition-colors focus:ring-2 focus:ring-primary-container focus:ring-offset-2 focus:ring-offset-surface">
+      <button className="mt-lg w-full h-[36px] bg-transparent border border-[#334155] text-on-surface text-label-md font-label-md rounded flex items-center justify-center gap-sm hover:bg-[#334155] transition-colors focus:ring-2 focus:ring-primary-container focus:ring-offset-2 focus:ring-offset-surface" onClick={handleCheck}>
       <span className="material-symbols-outlined" style={{fontSize: "16px"}}>update</span>
-                                  Check for Updates
+                                  {checking ? 'Checking…' : 'Check for Updates'}
                               </button>
       </section>
       {/* Data Management (Spans full width) */}
@@ -169,10 +179,22 @@ export function SettingsPreferences(props: SettingsPreferencesProps) {
                                   </p>
       </div>
       <div className="shrink-0">
-      <button className="h-[44px] px-lg bg-error-container text-on-error-container text-label-md font-label-md rounded flex items-center justify-center gap-sm hover:bg-opacity-90 transition-colors focus:ring-2 focus:ring-error focus:ring-offset-2 focus:ring-offset-surface">
+      {confirmClear ? (
+        <div className="flex gap-sm">
+          <button className="h-[44px] px-lg bg-error-container text-on-error-container text-label-md font-label-md rounded flex items-center justify-center gap-sm hover:bg-opacity-90 transition-colors focus:ring-2 focus:ring-error focus:ring-offset-2 focus:ring-offset-surface" onClick={() => { resetAll(); setConfirmClear(false); }}>
+            <span className="material-symbols-outlined" style={{fontSize: "18px"}}>delete_forever</span>
+            Confirm Clear
+          </button>
+          <button className="h-[44px] px-lg border border-outline-variant text-on-surface text-label-md font-label-md rounded flex items-center justify-center hover:bg-surface-variant transition-colors" onClick={() => setConfirmClear(false)}>
+            Cancel
+          </button>
+        </div>
+      ) : (
+      <button className="h-[44px] px-lg bg-error-container text-on-error-container text-label-md font-label-md rounded flex items-center justify-center gap-sm hover:bg-opacity-90 transition-colors focus:ring-2 focus:ring-error focus:ring-offset-2 focus:ring-offset-surface" onClick={() => setConfirmClear(true)}>
       <span className="material-symbols-outlined" style={{fontSize: "18px"}}>delete_forever</span>
                                       Clear All Data
                                   </button>
+      )}
       </div>
       </section>
       </div>
