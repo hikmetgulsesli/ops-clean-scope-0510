@@ -7,30 +7,36 @@
 // 3. Add onClick/onChange handlers to interactive elements
 // 4. Replace placeholder data with props/state
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { useAppContext } from "../contexts/AppContext";
-import type { OpsRecord } from "../types/domain";
 
 interface DashboardProps {}
 
 export function Dashboard(props: DashboardProps) {
-  const { navigate, records, searchQuery, setSearchQuery, filterStatus, setFilterStatus, selectRecord } = useAppContext();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [selectedRows, setSelectedRows] = useState<Set<string>>(new Set());
-  const pageSize = 5;
+  const {
+    records,
+    navigate,
+    selectRecord,
+    setSearchQuery,
+    setFilterStatus,
+    searchQuery,
+    filterStatus,
+    toggleMobileMenu,
+  } = useAppContext();
 
-  const handleNav = (view: Parameters<typeof navigate>[0]) => {
-    navigate(view);
-  };
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 5;
 
   const filteredRecords = useMemo(() => {
     let result = records;
-    if (searchQuery.trim()) {
+    if (searchQuery) {
       const q = searchQuery.toLowerCase();
-      result = result.filter((r) =>
-        r.id.toLowerCase().includes(q) ||
-        r.entityName.toLowerCase().includes(q) ||
-        r.type.toLowerCase().includes(q)
+      result = result.filter(
+        (r) =>
+          r.id.toLowerCase().includes(q) ||
+          r.entityName.toLowerCase().includes(q) ||
+          r.type.toLowerCase().includes(q)
       );
     }
     if (filterStatus) {
@@ -39,84 +45,54 @@ export function Dashboard(props: DashboardProps) {
     return result;
   }, [records, searchQuery, filterStatus]);
 
+  const paginatedRecords = useMemo(() => {
+    const start = (currentPage - 1) * pageSize;
+    return filteredRecords.slice(start, start + pageSize);
+  }, [filteredRecords, currentPage]);
+
   const totalPages = Math.max(1, Math.ceil(filteredRecords.length / pageSize));
-  const safePage = Math.min(currentPage, totalPages);
-  const paginatedRecords = filteredRecords.slice((safePage - 1) * pageSize, safePage * pageSize);
 
-  const activeCount = records.filter((r) => r.status === "active").length;
-  const pendingCount = records.filter((r) => r.status === "pending").length;
+  const activeCount = records.filter((r) => r.status === 'active').length;
+  const pendingCount = records.filter((r) => r.status === 'pending').length;
 
-  const toggleRow = (id: string) => {
-    setSelectedRows((prev) => {
+  const toggleRow = useCallback((id: string) => {
+    setSelectedIds((prev) => {
       const next = new Set(prev);
       if (next.has(id)) next.delete(id);
       else next.add(id);
       return next;
     });
-  };
+  }, []);
 
-  const toggleAll = () => {
-    const allSelected = paginatedRecords.every((r) => selectedRows.has(r.id));
-    if (allSelected && paginatedRecords.length > 0) {
-      setSelectedRows((prev) => {
-        const next = new Set(prev);
-        paginatedRecords.forEach((r) => next.delete(r.id));
-        return next;
-      });
-    } else {
-      setSelectedRows((prev) => {
-        const next = new Set(prev);
-        paginatedRecords.forEach((r) => next.add(r.id));
-        return next;
-      });
-    }
-  };
+  const toggleAll = useCallback(() => {
+    const currentIds = paginatedRecords.map((r) => r.id);
+    const allSelected = currentIds.every((id) => selectedIds.has(id));
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (allSelected) {
+        currentIds.forEach((id) => next.delete(id));
+      } else {
+        currentIds.forEach((id) => next.add(id));
+      }
+      return next;
+    });
+  }, [paginatedRecords, selectedIds]);
 
-  const handleExport = () => {
-    const data = selectedRows.size > 0 ? records.filter((r) => selectedRows.has(r.id)) : filteredRecords;
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+  const handleExport = useCallback(() => {
+    const data = selectedIds.size > 0
+      ? records.filter((r) => selectedIds.has(r.id))
+      : filteredRecords;
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
+    const a = document.createElement('a');
     a.href = url;
-    a.download = "operations-export.json";
+    a.download = 'records-export.json';
     a.click();
     URL.revokeObjectURL(url);
-  };
+  }, [records, filteredRecords, selectedIds]);
 
-  const statusBadge = (status: string) => {
-    switch (status) {
-      case "active":
-        return (
-          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wide uppercase bg-[#10b981]/10 text-[#10b981] border border-[#10b981]/20">
-            Active
-          </span>
-        );
-      case "pending":
-        return (
-          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wide uppercase bg-tertiary-container/20 text-tertiary border border-tertiary/20">
-            Pending
-          </span>
-        );
-      case "completed":
-        return (
-          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wide uppercase bg-outline-variant/30 text-on-surface-variant border border-outline-variant/50">
-            Completed
-          </span>
-        );
-      case "failed":
-        return (
-          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wide uppercase bg-error-container/20 text-error border border-error/20">
-            Failed
-          </span>
-        );
-      default:
-        return (
-          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wide uppercase bg-outline-variant/30 text-on-surface-variant border border-outline-variant/50">
-            {status}
-          </span>
-        );
-    }
-  };
+  const startIdx = filteredRecords.length === 0 ? 0 : (currentPage - 1) * pageSize + 1;
+  const endIdx = Math.min(currentPage * pageSize, filteredRecords.length);
 
   return (
     <>
@@ -133,36 +109,31 @@ export function Dashboard(props: DashboardProps) {
       </div>
       </div>
       </div>
-      <button
-        className="w-full h-touch-target bg-primary-container text-on-primary-container rounded-DEFAULT flex items-center justify-center gap-sm mb-md hover:bg-inverse-primary transition-colors focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-surface-container-low"
-        type="button"
-        onClick={() => handleNav('create-record')}
-        aria-label="New Entry"
-      >
+      <button className="w-full h-touch-target bg-primary-container text-on-primary-container rounded-DEFAULT flex items-center justify-center gap-sm mb-md hover:bg-inverse-primary transition-colors focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-surface-container-low" onClick={() => { selectRecord(null); navigate('create-record'); }}>
       <span className="material-symbols-outlined text-[18px]">add</span>
       <span className="text-label-md font-label-md">New Entry</span>
       </button>
       <div className="flex flex-col gap-xs flex-grow">
       {/* Active Nav Item */}
-      <a className="bg-secondary-container dark:bg-secondary-container text-on-secondary-container dark:text-on-secondary-container rounded-lg flex items-center gap-sm px-sm py-sm cursor-pointer select-none" href="#" onClick={(e) => { e.preventDefault(); }}>
+      <a className="bg-secondary-container dark:bg-secondary-container text-on-secondary-container dark:text-on-secondary-container rounded-lg flex items-center gap-sm px-sm py-sm cursor-pointer select-none" href="#" onClick={(e) => { e.preventDefault(); navigate('dashboard'); }}>
       <span className="material-symbols-outlined" style={{fontVariationSettings: "'FILL' 1"}}>dashboard</span>
       <span className="text-label-md font-label-md">Dashboard</span>
       </a>
-      <a className="text-on-surface-variant hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 rounded-lg flex items-center gap-sm px-sm py-sm cursor-pointer select-none" href="#" onClick={(e) => { e.preventDefault(); handleNav('insights'); }}>
+      <a className="text-on-surface-variant hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 rounded-lg flex items-center gap-sm px-sm py-sm cursor-pointer select-none" href="#" onClick={(e) => { e.preventDefault(); navigate('insights'); }}>
       <span className="material-symbols-outlined">analytics</span>
       <span className="text-label-md font-label-md">Insights</span>
       </a>
-      <a className="text-on-surface-variant hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 rounded-lg flex items-center gap-sm px-sm py-sm cursor-pointer select-none" href="#" onClick={(e) => { e.preventDefault(); handleNav('settings'); }}>
+      <a className="text-on-surface-variant hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 rounded-lg flex items-center gap-sm px-sm py-sm cursor-pointer select-none" href="#" onClick={(e) => { e.preventDefault(); navigate('settings'); }}>
       <span className="material-symbols-outlined">settings</span>
       <span className="text-label-md font-label-md">Settings</span>
       </a>
       </div>
       <div className="mt-auto flex flex-col gap-xs pt-md border-t border-outline-variant">
-      <a className="text-on-surface-variant hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 rounded-lg flex items-center gap-sm px-sm py-sm cursor-pointer select-none" href="#" onClick={(e) => { e.preventDefault(); handleNav('settings'); }}>
+      <a className="text-on-surface-variant hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 rounded-lg flex items-center gap-sm px-sm py-sm cursor-pointer select-none" href="#" onClick={(e) => { e.preventDefault(); navigate('settings'); }}>
       <span className="material-symbols-outlined">contact_support</span>
       <span className="text-label-md font-label-md">Support</span>
       </a>
-      <a className="text-on-surface-variant hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 rounded-lg flex items-center gap-sm px-sm py-sm cursor-pointer select-none" href="#" onClick={(e) => { e.preventDefault(); handleNav('dashboard'); }}>
+      <a className="text-on-surface-variant hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 rounded-lg flex items-center gap-sm px-sm py-sm cursor-pointer select-none" href="#" onClick={(e) => { e.preventDefault(); navigate('dashboard'); }}>
       <span className="material-symbols-outlined">logout</span>
       <span className="text-label-md font-label-md">Sign Out</span>
       </a>
@@ -173,40 +144,20 @@ export function Dashboard(props: DashboardProps) {
       {/* TopAppBar */}
       <header className="bg-surface-container dark:bg-surface-container docked full-width top-0 z-40 border-b border-outline-variant dark:border-outline-variant flat no shadows flex justify-between items-center h-14 w-full px-gutter ml-auto shrink-0 md:hidden">
       {/* Mobile Menu Icon (Not in JSON but needed for responsive) */}
-      <button
-        className="p-sm text-on-surface-variant hover:bg-surface-bright dark:hover:bg-surface-bright transition-colors duration-200 cursor-pointer active:opacity-80 rounded-full md:hidden"
-        type="button"
-        onClick={() => handleNav('settings')}
-        aria-label="Menu"
-      >
-      <span className="material-symbols-outlined">menu</span>
+      <button aria-label="Toggle mobile menu" className="p-sm text-on-surface-variant hover:bg-surface-bright dark:hover:bg-surface-bright transition-colors duration-200 cursor-pointer active:opacity-80 rounded-full md:hidden" onClick={toggleMobileMenu}>
+      <span className="material-symbols-outlined pointer-events-none">menu</span>
       </button>
       <div className="text-headline-md font-headline-md font-bold text-primary dark:text-primary mr-auto ml-sm">
                       Productivity Ops
                   </div>
       <div className="flex items-center gap-sm">
-      <button
-        className="w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-bright dark:hover:bg-surface-bright transition-colors duration-200 cursor-pointer active:opacity-80"
-        type="button"
-        onClick={() => handleNav('profile')}
-        aria-label="Notifications"
-      >
+      <button className="w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-bright dark:hover:bg-surface-bright transition-colors duration-200 cursor-pointer active:opacity-80" aria-label="Notifications" onClick={() => navigate('profile')}>
       <span className="material-symbols-outlined">notifications</span>
       </button>
-      <button
-        className="w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-bright dark:hover:bg-surface-bright transition-colors duration-200 cursor-pointer active:opacity-80"
-        type="button"
-        onClick={() => handleNav('settings')}
-        aria-label="Help"
-      >
+      <button className="w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-bright dark:hover:bg-surface-bright transition-colors duration-200 cursor-pointer active:opacity-80" aria-label="Help" onClick={() => navigate('settings')}>
       <span className="material-symbols-outlined">help_outline</span>
       </button>
-      <div
-        className="w-8 h-8 rounded-full bg-secondary-container overflow-hidden shrink-0 ml-xs border border-outline-variant cursor-pointer"
-        onClick={() => handleNav('profile')}
-        role="button"
-        aria-label="User Profile"
-      >
+      <div className="w-8 h-8 rounded-full bg-secondary-container overflow-hidden shrink-0 ml-xs border border-outline-variant cursor-pointer" aria-label="User Profile" role="button" tabIndex={0} onClick={() => navigate('profile')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); navigate('profile'); } }}>
       <img alt="User Profile" className="w-full h-full object-cover" data-alt="A close up, professional headshot of a person with short hair, wearing a dark collared shirt. They have a subtle smile and are looking directly at the camera. The background is a slightly blurred, neutral grey, ensuring the subject stands out. The lighting is soft and even, highlighting their features clearly. The image conveys a sense of approachability and professionalism, typical of a corporate avatar." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkul4gK27iuLBM-JAImix-OwBVv5T5cKB1-ZqVrfI4lmQ-w4IyPDj84l-8JmleyMgGlKXQUszZFoSepzkZvQydgvBB_lodHfU0E2bFReX5uQ_XtXRMYVOU_YajS6oNp2zB-lMaKaxi1kI4qH6qVIfZkNhgdz-RKPf2OptC8RlriMd5tvcScUppHtdSVVh82K0LFOf-ZNA_5ZEhTbSElwAfDRt1TNb8PkSQkTwWQ93Fp7sgUCxTkKPDlJM3axX1c-Y0GkH3lwdOyEQ" />
       </div>
       </div>
@@ -215,37 +166,16 @@ export function Dashboard(props: DashboardProps) {
       <header className="hidden md:flex bg-surface-container dark:bg-surface-container docked full-width top-0 z-40 border-b border-outline-variant dark:border-outline-variant flat no shadows justify-between items-center h-14 w-full px-gutter shrink-0">
       <div className="flex-1 max-w-md relative">
       <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
-      <input
-        className="w-full h-9 bg-surface border border-outline-variant rounded-DEFAULT pl-10 pr-3 text-body-sm font-body-sm text-on-surface placeholder-on-surface-variant focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all"
-        placeholder="Search operations..."
-        type="text"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-      />
+      <input className="w-full h-9 bg-surface border border-outline-variant rounded-DEFAULT pl-10 pr-3 text-body-sm font-body-sm text-on-surface placeholder-on-surface-variant focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all" placeholder="Search operations..." type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
       </div>
       <div className="flex items-center gap-sm ml-auto">
-      <button
-        className="w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-bright dark:hover:bg-surface-bright transition-colors duration-200 cursor-pointer active:opacity-80"
-        type="button"
-        onClick={() => handleNav('profile')}
-        aria-label="Notifications"
-      >
+      <button className="w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-bright dark:hover:bg-surface-bright transition-colors duration-200 cursor-pointer active:opacity-80" aria-label="Notifications" onClick={() => navigate('profile')}>
       <span className="material-symbols-outlined">notifications</span>
       </button>
-      <button
-        className="w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-bright dark:hover:bg-surface-bright transition-colors duration-200 cursor-pointer active:opacity-80"
-        type="button"
-        onClick={() => handleNav('settings')}
-        aria-label="Help"
-      >
+      <button className="w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-bright dark:hover:bg-surface-bright transition-colors duration-200 cursor-pointer active:opacity-80" aria-label="Help" onClick={() => navigate('settings')}>
       <span className="material-symbols-outlined">help_outline</span>
       </button>
-      <div
-        className="w-8 h-8 rounded-full bg-secondary-container overflow-hidden shrink-0 ml-xs border border-outline-variant cursor-pointer hover:border-primary transition-colors"
-        onClick={() => handleNav('profile')}
-        role="button"
-        aria-label="User Profile"
-      >
+      <div className="w-8 h-8 rounded-full bg-secondary-container overflow-hidden shrink-0 ml-xs border border-outline-variant cursor-pointer hover:border-primary transition-colors" aria-label="User Profile" role="button" tabIndex={0} onClick={() => navigate('profile')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); navigate('profile'); } }}>
       <img alt="User Profile" className="w-full h-full object-cover" data-alt="A highly detailed, professional headshot of a business executive in a dark environment. The lighting is low-key, with a subtle rim light defining the subject against a dark grey background. The executive is wearing a dark, tailored suit. The mood is serious, focused, and professional, aligning with a high-end corporate identity. The overall aesthetic is dark mode, with deep blacks and cool tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbLhHyaH3wWNBKJ4JkBmgUY8qXNuU0pDmL0FnpQMB3hW7rv-tP_WQo9bwPHYmdtIy7vPYHF8xb2JCCGI9Gcs69u0WwJt5Ha2YSZty0uGaPB7emS5vXDJ86Cj3TQom4udg3kckTs-_d2ElV4HybD5HTSFBcxhbuh5syg5kkckP4H1ZfNWh8KHBE8MyS2iraHLR-hTX02r7aoPW6eivT8mVmhAgOsBHrY7AHnlXYOcQJd82VAdp9FGEdk0FF6ZmeePbTBme6dEh2BjI" />
       </div>
       </div>
@@ -258,21 +188,11 @@ export function Dashboard(props: DashboardProps) {
       <p className="text-body-md font-body-md text-on-surface-variant mt-xs">Real-time metrics and active operational records.</p>
       </div>
       <div className="flex items-center gap-sm">
-      <button
-        className="h-9 px-md border border-outline-variant bg-surface-container rounded-DEFAULT text-label-md font-label-md text-on-surface hover:bg-surface-bright transition-colors flex items-center gap-xs"
-        type="button"
-        onClick={handleExport}
-        aria-label="Export"
-      >
+      <button className="h-9 px-md border border-outline-variant bg-surface-container rounded-DEFAULT text-label-md font-label-md text-on-surface hover:bg-surface-bright transition-colors flex items-center gap-xs" onClick={handleExport}>
       <span className="material-symbols-outlined text-[16px]">download</span>
                               Export
                           </button>
-      <button
-        className="h-9 px-md bg-primary-container rounded-DEFAULT text-label-md font-label-md text-on-primary-container hover:bg-inverse-primary transition-colors flex items-center gap-xs"
-        type="button"
-        onClick={() => handleNav('create-record')}
-        aria-label="New Task"
-      >
+      <button className="h-9 px-md bg-primary-container rounded-DEFAULT text-label-md font-label-md text-on-primary-container hover:bg-inverse-primary transition-colors flex items-center gap-xs" onClick={() => { selectRecord(null); navigate('create-record'); }}>
       <span className="material-symbols-outlined text-[16px]">add</span>
                               New Task
                           </button>
@@ -289,7 +209,7 @@ export function Dashboard(props: DashboardProps) {
       </div>
       </div>
       <div>
-      <div className="text-headline-lg font-headline-lg text-on-surface">{activeCount.toLocaleString()}</div>
+      <div className="text-headline-lg font-headline-lg text-on-surface">{activeCount}</div>
       <div className="text-body-sm font-body-sm text-primary flex items-center gap-xs mt-xs">
       <span className="material-symbols-outlined text-[14px]">trending_up</span>
                                   +12% from last week
@@ -305,7 +225,7 @@ export function Dashboard(props: DashboardProps) {
       </div>
       </div>
       <div>
-      <div className="text-headline-lg font-headline-lg text-on-surface">{pendingCount.toLocaleString()}</div>
+      <div className="text-headline-lg font-headline-lg text-on-surface">{pendingCount}</div>
       <div className="text-body-sm font-body-sm text-tertiary flex items-center gap-xs mt-xs">
       <span className="material-symbols-outlined text-[14px]">warning</span>
                                   Needs attention
@@ -350,25 +270,14 @@ export function Dashboard(props: DashboardProps) {
       <div className="p-md border-b border-outline-variant flex flex-col md:flex-row gap-sm items-center justify-between bg-surface-container-high">
       <div className="w-full md:w-auto flex-1 max-w-md relative">
       <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">filter_list</span>
-      <input
-        className="w-full h-9 bg-surface border border-outline-variant rounded-DEFAULT pl-10 pr-3 text-body-sm font-body-sm text-on-surface placeholder-on-surface-variant focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all"
-        placeholder="Filter records by ID, Name, or tag..."
-        type="text"
-        value={searchQuery}
-        onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
-      />
+      <input className="w-full h-9 bg-surface border border-outline-variant rounded-DEFAULT pl-10 pr-3 text-body-sm font-body-sm text-on-surface placeholder-on-surface-variant focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all" placeholder="Filter records by ID, Name, or tag..." type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
       </div>
       <div className="flex items-center gap-sm w-full md:w-auto">
-      <select
-        className="h-9 bg-surface border border-outline-variant rounded-DEFAULT text-body-sm font-body-sm text-on-surface px-3 py-0 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none w-full md:w-auto"
-        value={filterStatus}
-        onChange={(e) => { setFilterStatus(e.target.value); setCurrentPage(1); }}
-      >
+      <select className="h-9 bg-surface border border-outline-variant rounded-DEFAULT text-body-sm font-body-sm text-on-surface px-3 py-0 focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none w-full md:w-auto" value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}>
       <option value="">All Statuses</option>
       <option value="active">Active</option>
       <option value="pending">Pending</option>
       <option value="completed">Completed</option>
-      <option value="failed">Failed</option>
       </select>
       <div className="h-9 bg-surface border border-outline-variant rounded-DEFAULT flex items-center px-3 text-body-sm font-body-sm text-on-surface w-full md:w-auto cursor-pointer hover:border-primary transition-colors">
       <span className="material-symbols-outlined text-[16px] mr-xs text-on-surface-variant">calendar_today</span>
@@ -378,16 +287,16 @@ export function Dashboard(props: DashboardProps) {
       </div>
       {/* Table */}
       <div className="overflow-x-auto">
+      {paginatedRecords.length === 0 ? (
+        <div className="p-lg text-center text-body-md font-body-md text-on-surface-variant">
+          No records match your filters.
+        </div>
+      ) : (
       <table className="w-full text-left border-collapse">
       <thead>
       <tr className="bg-surface-container-lowest border-b border-outline-variant">
       <th className="p-md text-label-md font-label-md text-on-surface-variant uppercase tracking-wider w-12 text-center">
-      <input
-        className="rounded-sm bg-surface border-outline-variant text-primary focus:ring-primary"
-        type="checkbox"
-        checked={paginatedRecords.length > 0 && paginatedRecords.every((r) => selectedRows.has(r.id))}
-        onChange={toggleAll}
-      />
+      <input className="rounded-sm bg-surface border-outline-variant text-primary focus:ring-primary" type="checkbox" checked={paginatedRecords.length > 0 && paginatedRecords.every((r) => selectedIds.has(r.id))} onChange={toggleAll} />
       </th>
       <th className="p-md text-label-md font-label-md text-on-surface-variant uppercase tracking-wider font-semibold">Record ID</th>
       <th className="p-md text-label-md font-label-md text-on-surface-variant uppercase tracking-wider font-semibold">Entity Name</th>
@@ -399,79 +308,47 @@ export function Dashboard(props: DashboardProps) {
       </thead>
       <tbody className="divide-y divide-outline-variant text-body-md font-body-md">
       {paginatedRecords.map((record) => (
-      <tr
-        key={record.id}
-        className="hover:bg-surface-variant transition-colors group cursor-pointer"
-        onClick={() => selectRecord(record.id)}
-      >
-      <td className="p-md text-center" onClick={(e) => e.stopPropagation()}>
-      <input
-        className="rounded-sm bg-surface border-outline-variant text-primary focus:ring-primary"
-        type="checkbox"
-        checked={selectedRows.has(record.id)}
-        onChange={() => toggleRow(record.id)}
-      />
+      <tr key={record.id} className="hover:bg-surface-variant transition-colors group" onClick={() => selectRecord(record.id)}>
+      <td className="p-md text-center">
+      <input className="rounded-sm bg-surface border-outline-variant text-primary focus:ring-primary" type="checkbox" checked={selectedIds.has(record.id)} onChange={(e) => { e.stopPropagation(); toggleRow(record.id); }} />
       </td>
       <td className="p-md text-primary font-mono text-sm">{record.id}</td>
       <td className="p-md font-medium text-on-surface">{record.entityName}</td>
       <td className="p-md text-on-surface-variant">{record.type}</td>
-      <td className="p-md">{statusBadge(record.status)}</td>
+      <td className="p-md">
+      <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wide uppercase border ${
+        record.status === 'active' ? 'bg-emerald-100 text-emerald-800 border-emerald-200' :
+        record.status === 'pending' ? 'bg-tertiary-container/20 text-tertiary border-tertiary/20' :
+        record.status === 'completed' ? 'bg-outline-variant/30 text-on-surface-variant border-outline-variant/50' :
+        'bg-error-container/20 text-error border-error/20'
+      }`}>
+        {record.status.charAt(0).toUpperCase() + record.status.slice(1)}
+      </span>
+      </td>
       <td className="p-md text-right text-on-surface-variant tabular-nums">{record.lastUpdated}</td>
-      <td className="p-md text-right" onClick={(e) => e.stopPropagation()}>
-      <button
-        className="text-on-surface-variant hover:text-primary transition-colors opacity-0 group-hover:opacity-100"
-        type="button"
-        onClick={() => selectRecord(record.id)}
-        aria-label={`Actions for ${record.entityName}`}
-      >
+      <td className="p-md text-right">
+      <button className="text-on-surface-variant hover:text-primary transition-colors opacity-0 group-hover:opacity-100" aria-label={`Actions for ${record.entityName}`} onClick={(e) => { e.stopPropagation(); selectRecord(record.id); }}>
       <span className="material-symbols-outlined text-[20px]">more_vert</span>
       </button>
       </td>
       </tr>
       ))}
-      {paginatedRecords.length === 0 && (
-      <tr>
-      <td colSpan={7} className="p-lg text-center text-on-surface-variant">
-        No records match your filters.
-      </td>
-      </tr>
-      )}
       </tbody>
       </table>
+      )}
       </div>
       {/* Pagination */}
       <div className="p-sm border-t border-outline-variant bg-surface-container-high flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant">
-      <span className="pl-sm">
-        Showing {filteredRecords.length > 0 ? (safePage - 1) * pageSize + 1 : 0}-{Math.min(safePage * pageSize, filteredRecords.length)} of {filteredRecords.length}
-      </span>
+      <span className="pl-sm">Showing {startIdx}-{endIdx} of {filteredRecords.length}</span>
       <div className="flex items-center gap-xs">
-      <button
-        className={`w-8 h-8 rounded flex items-center justify-center ${safePage <= 1 ? "cursor-not-allowed opacity-50" : "hover:bg-surface-variant"}`}
-        type="button"
-        onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-        disabled={safePage <= 1}
-        aria-label="Previous page"
-      >
+      <button className="w-8 h-8 rounded hover:bg-surface-variant flex items-center justify-center cursor-not-allowed opacity-50" disabled={currentPage === 1} onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}>
       <span className="material-symbols-outlined text-[18px]">chevron_left</span>
       </button>
-      {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-      <button
-        key={page}
-        className={`w-8 h-8 rounded flex items-center justify-center ${page === safePage ? "bg-secondary-container text-on-secondary-container" : "hover:bg-surface-variant"}`}
-        type="button"
-        onClick={() => setCurrentPage(page)}
-        aria-label={`Page ${page}`}
-      >
-        {page}
-      </button>
+      {Array.from({ length: totalPages }, (_, i) => i + 1).slice(0, 5).map((page) => (
+        <button key={page} className={`w-8 h-8 rounded flex items-center justify-center ${page === currentPage ? 'bg-secondary-container text-on-secondary-container' : 'hover:bg-surface-variant'}`} onClick={() => setCurrentPage(page)}>{page}</button>
       ))}
-      <button
-        className={`w-8 h-8 rounded flex items-center justify-center ${safePage >= totalPages ? "cursor-not-allowed opacity-50" : "hover:bg-surface-variant"}`}
-        type="button"
-        onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-        disabled={safePage >= totalPages}
-        aria-label="Next page"
-      >
+      {totalPages > 5 && <span className="px-1">...</span>}
+      <button className="w-8 h-8 rounded hover:bg-surface-variant flex items-center justify-center" disabled={currentPage === totalPages} onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}>
       <span className="material-symbols-outlined text-[18px]">chevron_right</span>
       </button>
       </div>

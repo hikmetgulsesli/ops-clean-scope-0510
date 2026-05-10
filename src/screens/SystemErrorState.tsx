@@ -14,8 +14,7 @@ interface SystemErrorStateProps {}
 
 export function SystemErrorState(props: SystemErrorStateProps) {
   const { error, retryLoad, resetAll } = useAppContext();
-  const [showDetails, setShowDetails] = useState(false);
-  const [errorTimestamp] = useState(() => new Date().toISOString());
+  const [expanded, setExpanded] = useState(false);
 
   return (
     <>
@@ -40,46 +39,30 @@ export function SystemErrorState(props: SystemErrorStateProps) {
                       </p>
       {/* Actions */}
       <div className="flex flex-col w-full gap-sm">
-      <button
-        className="h-[44px] md:h-[36px] w-full bg-primary-container text-on-primary-container rounded flex items-center justify-center gap-sm px-md hover:bg-primary-container/90 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-offset-2 focus:ring-offset-background"
-        type="button"
-        onClick={retryLoad}
-        aria-label="Retry Connection"
-      >
+      <button className="h-[44px] md:h-[36px] w-full bg-primary-container text-on-primary-container rounded flex items-center justify-center gap-sm px-md hover:bg-primary-container/90 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-offset-2 focus:ring-offset-background" type="button" onClick={retryLoad}>
       <span className="material-symbols-outlined text-[18px]">
                                   refresh
                               </span>
       <span className="text-label-md font-label-md">Retry Connection</span>
       </button>
-      <button
-        className="h-[44px] md:h-[36px] w-full bg-transparent border border-outline-variant text-on-surface rounded flex items-center justify-center gap-sm px-md hover:bg-surface-variant transition-colors focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-offset-2 focus:ring-offset-background"
-        type="button"
-        onClick={resetAll}
-        aria-label="Clear Storage and Reset"
-      >
+      <button className="h-[44px] md:h-[36px] w-full bg-transparent border border-outline-variant text-on-surface rounded flex items-center justify-center gap-sm px-md hover:bg-surface-variant transition-colors focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-offset-2 focus:ring-offset-background" type="button" onClick={resetAll}>
       <span className="material-symbols-outlined text-[18px]">
                                   delete_sweep
                               </span>
       <span className="text-label-md font-label-md">Clear Storage &amp; Reset</span>
       </button>
       </div>
-      {/* Technical Details Accordion */}
+      {/* Technical Details Accordion (Simulated) */}
       <div className="w-full mt-lg pt-md border-t border-outline-variant text-left">
-      <button
-        className="flex items-center justify-between w-full text-label-md font-label-md text-on-surface-variant hover:text-on-surface transition-colors focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-offset-2 focus:ring-offset-surface-container rounded p-xs -ml-xs"
-        type="button"
-        onClick={() => setShowDetails((prev) => !prev)}
-        aria-expanded={showDetails}
-        aria-label={showDetails ? "Hide Technical Details" : "View Technical Details"}
-      >
-      <span>View Technical Details</span>
-      <span className={`material-symbols-outlined text-[18px] transition-transform duration-150 ${showDetails ? "rotate-180" : ""}`}>
+      <button aria-label={expanded ? 'Hide Technical Details' : 'View Technical Details'} className="flex items-center justify-between w-full text-label-md font-label-md text-on-surface-variant hover:text-on-surface transition-colors focus:outline-none focus:ring-2 focus:ring-primary-container focus:ring-offset-2 focus:ring-offset-surface-container rounded p-xs -ml-xs" type="button" onClick={() => setExpanded(!expanded)}>
+      <span>{expanded ? 'Hide Technical Details' : 'View Technical Details'}</span>
+      <span className="material-symbols-outlined text-[18px]">
                                   expand_more
                               </span>
       </button>
-      <div className={`mt-sm p-sm bg-surface-container-lowest rounded border border-outline-variant font-mono text-[10px] leading-tight text-on-surface-variant overflow-x-auto transition-all duration-150 ${showDetails ? "block" : "hidden"}`}>
-                              {error || "ERR_CONNECTION_REFUSED"}<br />
-                              Timestamp: {errorTimestamp}<br />
+      <div className={`mt-sm p-sm bg-surface-container-lowest rounded border border-outline-variant font-mono text-[10px] leading-tight text-on-surface-variant overflow-x-auto transition-all ${expanded ? '' : 'hidden'}`}>
+                              {error || 'Unknown Error'}<br />
+                              Timestamp: {new Date().toISOString()}<br />
                               Endpoint: /api/v1/ops/manifest<br />
                               Cache_Status: STALE
                           </div>

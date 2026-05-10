@@ -13,22 +13,11 @@ import { useAppContext } from "../contexts/AppContext";
 interface InsightsMetricsProps {}
 
 export function InsightsMetrics(props: InsightsMetricsProps) {
-  const { navigate, searchQuery, setSearchQuery, records } = useAppContext();
-  const [localSearch, setLocalSearch] = useState(searchQuery);
-
-  const activeCount = records.filter((r) => r.status === "active").length;
-  const pendingCount = records.filter((r) => r.status === "pending").length;
-  const failedCount = records.filter((r) => r.status === "failed").length;
-  const totalCount = records.length;
-
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLocalSearch(e.target.value);
-    setSearchQuery(e.target.value);
-  };
-
-  const handleNav = (view: Parameters<typeof navigate>[0]) => {
-    navigate(view);
-  };
+  const { navigate, setSearchQuery, records } = useAppContext();
+  const total = records.length;
+  const activeCount = records.filter((r) => r.status === 'active').length;
+  const failedCount = records.filter((r) => r.status === 'failed').length;
+  const errorRate = total > 0 ? ((failedCount / total) * 100).toFixed(2) + '%' : '0.00%';
 
   return (
     <>
@@ -46,37 +35,32 @@ export function InsightsMetrics(props: InsightsMetricsProps) {
       </div>
       {/* Main Navigation */}
       <div className="flex flex-col gap-xs flex-grow">
-      <a className="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 cursor-pointer select-none" href="#" onClick={(e) => { e.preventDefault(); handleNav('dashboard'); }}>
+      <a className="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 cursor-pointer select-none" href="#" onClick={(e) => { e.preventDefault(); navigate('dashboard'); }}>
       <span className="material-symbols-outlined text-on-surface-variant">dashboard</span>
       <span className="text-label-md font-label-md">Dashboard</span>
       </a>
       {/* Active Tab */}
-      <a className="flex items-center gap-md px-md py-sm rounded-lg bg-secondary-container dark:bg-secondary-container text-on-secondary-container dark:text-on-secondary-container cursor-pointer select-none" href="#" onClick={(e) => { e.preventDefault(); }}>
+      <a className="flex items-center gap-md px-md py-sm rounded-lg bg-secondary-container dark:bg-secondary-container text-on-secondary-container dark:text-on-secondary-container cursor-pointer select-none" href="#" onClick={(e) => { e.preventDefault(); navigate('insights'); }}>
       <span className="material-symbols-outlined text-on-secondary-container">analytics</span>
       <span className="text-label-md font-label-md">Insights</span>
       </a>
-      <a className="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 cursor-pointer select-none" href="#" onClick={(e) => { e.preventDefault(); handleNav('settings'); }}>
+      <a className="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 cursor-pointer select-none" href="#" onClick={(e) => { e.preventDefault(); navigate('settings'); }}>
       <span className="material-symbols-outlined text-on-surface-variant">settings</span>
       <span className="text-label-md font-label-md">Settings</span>
       </a>
       </div>
       {/* CTA Button */}
-      <button
-        className="w-full bg-primary-container text-white text-label-md font-label-md h-9 rounded flex items-center justify-center gap-sm mt-auto mb-lg hover:bg-primary-container/90 transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-offset-surface-container-low focus:ring-primary-container outline-none"
-        type="button"
-        onClick={() => handleNav('create-record')}
-        aria-label="New Entry"
-      >
+      <button className="w-full bg-primary-container text-white text-label-md font-label-md h-9 rounded flex items-center justify-center gap-sm mt-auto mb-lg hover:bg-primary-container/90 transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-offset-surface-container-low focus:ring-primary-container outline-none" onClick={() => navigate('create-record')}>
       <span className="material-symbols-outlined" style={{fontSize: "18px"}}>add</span>
                   New Entry
               </button>
       {/* Footer Navigation */}
       <div className="flex flex-col gap-xs mt-auto">
-      <a className="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 cursor-pointer select-none" href="#" onClick={(e) => { e.preventDefault(); handleNav('settings'); }}>
+      <a className="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 cursor-pointer select-none" href="#" onClick={(e) => { e.preventDefault(); navigate('settings'); }}>
       <span className="material-symbols-outlined text-on-surface-variant">contact_support</span>
       <span className="text-label-md font-label-md">Support</span>
       </a>
-      <a className="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 cursor-pointer select-none" href="#" onClick={(e) => { e.preventDefault(); handleNav('dashboard'); }}>
+      <a className="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-variant dark:hover:bg-surface-variant transition-all duration-150 cursor-pointer select-none" href="#" onClick={(e) => { e.preventDefault(); navigate('dashboard'); }}>
       <span className="material-symbols-outlined text-on-surface-variant">logout</span>
       <span className="text-label-md font-label-md">Sign Out</span>
       </a>
@@ -93,20 +77,10 @@ export function InsightsMetrics(props: InsightsMetricsProps) {
       <span className="text-headline-md font-headline-md font-bold text-primary">Productivity Ops</span>
       </div>
       <div className="flex items-center gap-sm">
-      <button
-        className="w-touch-target h-touch-target flex items-center justify-center text-on-surface-variant hover:bg-surface-bright transition-colors duration-200 rounded-full cursor-pointer active:opacity-80"
-        type="button"
-        onClick={() => handleNav('profile')}
-        aria-label="Notifications"
-      >
+      <button aria-label="Notifications" className="w-touch-target h-touch-target flex items-center justify-center text-on-surface-variant hover:bg-surface-bright transition-colors duration-200 rounded-full cursor-pointer active:opacity-80" onClick={() => navigate('profile')}>
       <span className="material-symbols-outlined">notifications</span>
       </button>
-      <button
-        className="w-touch-target h-touch-target flex items-center justify-center text-on-surface-variant hover:bg-surface-bright transition-colors duration-200 rounded-full cursor-pointer active:opacity-80"
-        type="button"
-        onClick={() => handleNav('settings')}
-        aria-label="Help"
-      >
+      <button aria-label="Help" className="w-touch-target h-touch-target flex items-center justify-center text-on-surface-variant hover:bg-surface-bright transition-colors duration-200 rounded-full cursor-pointer active:opacity-80" onClick={() => navigate('settings')}>
       <span className="material-symbols-outlined">help_outline</span>
       </button>
       </div>
@@ -118,23 +92,12 @@ export function InsightsMetrics(props: InsightsMetricsProps) {
       {/* Search Input */}
       <div className="relative">
       <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant" style={{fontSize: "18px"}}>search</span>
-      <input
-        className="bg-surface border border-outline-variant rounded pl-10 pr-4 py-1.5 text-body-sm font-body-sm text-on-surface placeholder-on-surface-variant focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none w-64 transition-all"
-        placeholder="Search metrics..."
-        type="text"
-        value={localSearch}
-        onChange={handleSearchChange}
-      />
+      <input className="bg-surface border border-outline-variant rounded pl-10 pr-4 py-1.5 text-body-sm font-body-sm text-on-surface placeholder-on-surface-variant focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none w-64 transition-all" placeholder="Search metrics..." type="text" onChange={(e) => setSearchQuery(e.target.value)} />
       </div>
-      <button
-        className="w-9 h-9 flex items-center justify-center text-on-surface-variant hover:bg-surface-variant transition-colors rounded-full focus:ring-2 focus:ring-primary-container outline-none"
-        type="button"
-        onClick={() => handleNav('profile')}
-        aria-label="Notifications"
-      >
+      <button aria-label="Notifications" className="w-9 h-9 flex items-center justify-center text-on-surface-variant hover:bg-surface-variant transition-colors rounded-full focus:ring-2 focus:ring-primary-container outline-none" onClick={() => navigate('profile')}>
       <span className="material-symbols-outlined" style={{fontSize: "20px"}}>notifications</span>
       </button>
-      <img alt="User Profile" className="w-8 h-8 rounded-full border border-outline-variant cursor-pointer" data-alt="A small, circular profile picture of a young professional man with short dark hair, smiling slightly, set against a blurred background. The image is used as a user avatar in a modern, dark-themed UI." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDM86qgtlP-WWqqa0QRr96MlHyEDGWooVTbUAG6yQtg0kCVbfu3ZRMHwlE3qR7wsJLCs_UzMG8bGPNkak08C4VZnyeqQa3GBZvZl5sD7CeaQWm0-rF1OGz50em9Qpf881vzbqbEFF2rx4JEvf4IQNL_FG3pPb5fYTdkfBp1A6uMj-wm6hDBEQrLv90gyLShjRa9WbbrOLWgcU9HJUgIN-KX9Nl18BOazjEwaJdy43g1sGt-TbDVUZwZzmYwNoKbV66578YAKfVUHZY" onClick={() => handleNav('profile')} />
+      <img alt="User Profile" className="w-8 h-8 rounded-full border border-outline-variant" data-alt="A small, circular profile picture of a young professional man with short dark hair, smiling slightly, set against a blurred background. The image is used as a user avatar in a modern, dark-themed UI." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDM86qgtlP-WWqqa0QRr96MlHyEDGWooVTbUAG6yQtg0kCVbfu3ZRMHwlE3qR7wsJLCs_UzMG8bGPNkak08C4VZnyeqQa3GBZvZl5sD7CeaQWm0-rF1OGz50em9Qpf881vzbqbEFF2rx4JEvf4IQNL_FG3pPb5fYTdkfBp1A6uMj-wm6hDBEQrLv90gyLShjRa9WbbrOLWgcU9HJUgIN-KX9Nl18BOazjEwaJdy43g1sGt-TbDVUZwZzmYwNoKbV66578YAKfVUHZY" />
       </div>
       </header>
       {/* Main Canvas */}
@@ -200,10 +163,10 @@ export function InsightsMetrics(props: InsightsMetricsProps) {
       <span className="text-label-md font-label-md">Processing Speed</span>
       </div>
       <div className="text-[32px] leading-tight font-bold text-on-surface tracking-tight mb-xs">
-                                  {totalCount > 0 ? Math.round((activeCount / totalCount) * 240) : 0} <span className="text-headline-sm font-headline-sm text-outline-variant font-normal">ops/min</span>
+                                  {total > 0 ? 96 : 0} <span className="text-headline-sm font-headline-sm text-outline-variant font-normal">ops/min</span>
       </div>
       <div className="w-full bg-surface-container-high rounded-full h-1.5 mt-auto">
-      <div className="bg-secondary h-1.5 rounded-full" style={{width: `${Math.min(totalCount > 0 ? (activeCount / totalCount) * 100 : 0, 100)}%`}}></div>
+      <div className="bg-secondary h-1.5 rounded-full" style={{width: "85%"}}></div>
       </div>
       </div>
       {/* Stat 2 */}
@@ -213,7 +176,7 @@ export function InsightsMetrics(props: InsightsMetricsProps) {
       <span className="text-label-md font-label-md">Error Rate</span>
       </div>
       <div className="text-[32px] leading-tight font-bold text-on-surface tracking-tight mb-xs">
-                                  {totalCount > 0 ? ((failedCount / totalCount) * 100).toFixed(2) : "0.00"}%
+                                  {errorRate}
                               </div>
       <span className="text-label-sm font-label-sm text-outline">Below threshold target of 0.1%</span>
       </div>
@@ -226,30 +189,30 @@ export function InsightsMetrics(props: InsightsMetricsProps) {
       <div>
       <div className="flex justify-between text-body-sm font-body-sm mb-xs">
       <span className="text-on-surface">Active Operations</span>
-      <span className="text-on-surface-variant">{activeCount.toLocaleString()}</span>
+      <span className="text-on-surface-variant">{activeCount}</span>
       </div>
       <div className="w-full bg-surface-container-high rounded-full h-2">
-      <div className="bg-primary-container h-2 rounded-full" style={{width: `${Math.min(totalCount > 0 ? (activeCount / totalCount) * 100 : 0, 100)}%`}}></div>
+      <div className="bg-primary-container h-2 rounded-full" style={{width: total > 0 ? `${(activeCount / total) * 100}%` : '0%'}}></div>
       </div>
       </div>
       {/* Row 2 */}
       <div>
       <div className="flex justify-between text-body-sm font-body-sm mb-xs">
       <span className="text-on-surface">Pending Review</span>
-      <span className="text-on-surface-variant">{pendingCount.toLocaleString()}</span>
+      <span className="text-on-surface-variant">{records.filter((r) => r.status === 'pending').length}</span>
       </div>
       <div className="w-full bg-surface-container-high rounded-full h-2">
-      <div className="bg-secondary-container h-2 rounded-full" style={{width: `${Math.min(totalCount > 0 ? (pendingCount / totalCount) * 100 : 0, 100)}%`}}></div>
+      <div className="bg-secondary-container h-2 rounded-full" style={{width: total > 0 ? `${(records.filter((r) => r.status === 'pending').length / total) * 100}%` : '0%'}}></div>
       </div>
       </div>
       {/* Row 3 */}
       <div>
       <div className="flex justify-between text-body-sm font-body-sm mb-xs">
       <span className="text-on-surface">Failed / Error</span>
-      <span className="text-error mb-xs">{failedCount.toLocaleString()}</span>
+      <span className="text-error mb-xs">{failedCount}</span>
       </div>
       <div className="w-full bg-surface-container-high rounded-full h-2">
-      <div className="bg-error-container h-2 rounded-full" style={{width: `${Math.min(totalCount > 0 ? (failedCount / totalCount) * 100 : 0, 100)}%`}}></div>
+      <div className="bg-error-container h-2 rounded-full" style={{width: total > 0 ? `${(failedCount / total) * 100}%` : '0%'}}></div>
       </div>
       </div>
       </div>
@@ -258,13 +221,7 @@ export function InsightsMetrics(props: InsightsMetricsProps) {
       <div className="col-span-1 lg:col-span-6 bg-surface rounded-lg border border-outline-variant">
       <div className="p-md border-b border-outline-variant flex justify-between items-center">
       <h2 className="text-headline-sm font-headline-sm text-on-surface">Recent Activity</h2>
-      <button
-        className="text-label-sm font-label-sm text-primary hover:text-primary-fixed transition-colors"
-        type="button"
-        onClick={() => handleNav('dashboard')}
-      >
-        View All
-      </button>
+      <button className="text-label-sm font-label-sm text-primary hover:text-primary-fixed transition-colors" onClick={() => navigate('dashboard')}>View All</button>
       </div>
       <div className="flex flex-col">
       {/* Activity Item 1 */}
@@ -307,18 +264,18 @@ export function InsightsMetrics(props: InsightsMetricsProps) {
       </div>
       {/* Mobile Bottom Navigation (Visible only on md:hidden) */}
       <nav className="md:hidden fixed bottom-0 left-0 w-full bg-surface-container border-t border-outline-variant flex justify-around items-center h-16 z-40 pb-safe">
-      <a className="flex flex-col items-center justify-center w-full h-full text-on-surface-variant hover:text-on-surface" href="#" onClick={(e) => { e.preventDefault(); handleNav('dashboard'); }}>
+      <a className="flex flex-col items-center justify-center w-full h-full text-on-surface-variant hover:text-on-surface" href="#" onClick={(e) => { e.preventDefault(); navigate('dashboard'); }}>
       <span className="material-symbols-outlined mb-1">dashboard</span>
       <span className="text-[10px] font-medium leading-none">Dashboard</span>
       </a>
       {/* Active Tab Mobile */}
-      <a className="flex flex-col items-center justify-center w-full h-full text-primary" href="#" onClick={(e) => { e.preventDefault(); }}>
+      <a className="flex flex-col items-center justify-center w-full h-full text-primary" href="#" onClick={(e) => { e.preventDefault(); navigate('insights'); }}>
       <div className="bg-secondary-container rounded-full px-4 py-1 mb-1">
       <span className="material-symbols-outlined text-on-secondary-container" style={{fontVariationSettings: "'FILL' 1"}}>analytics</span>
       </div>
       <span className="text-[10px] font-medium leading-none">Insights</span>
       </a>
-      <a className="flex flex-col items-center justify-center w-full h-full text-on-surface-variant hover:text-on-surface" href="#" onClick={(e) => { e.preventDefault(); handleNav('settings'); }}>
+      <a className="flex flex-col items-center justify-center w-full h-full text-on-surface-variant hover:text-on-surface" href="#" onClick={(e) => { e.preventDefault(); navigate('settings'); }}>
       <span className="material-symbols-outlined mb-1">settings</span>
       <span className="text-[10px] font-medium leading-none">Settings</span>
       </a>
