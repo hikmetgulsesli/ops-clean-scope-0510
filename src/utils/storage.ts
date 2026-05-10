@@ -28,6 +28,16 @@ export interface StorageData {
 
 const CURRENT_VERSION = 1;
 
+function isValidRecord(item: unknown): item is StorageData['records'][number] {
+  if (!item || typeof item !== 'object') return false;
+  const r = item as Record<string, unknown>;
+  const required = ['id', 'entityName', 'type', 'status', 'lastUpdated', 'priority', 'description'];
+  for (const key of required) {
+    if (typeof r[key] !== 'string') return false;
+  }
+  return true;
+}
+
 export function loadFromStorage(): StorageData | null {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -43,8 +53,10 @@ export function loadFromStorage(): StorageData | null {
     if (typeof settings.dailyDigest !== 'boolean') return null;
     if (typeof settings.weeklyReport !== 'boolean') return null;
     if (typeof settings.darkTheme !== 'boolean') return null;
+    const records = data.records.filter(isValidRecord);
+    if (records.length === 0 && data.records.length > 0) return null;
     return {
-      records: data.records as StorageData['records'],
+      records,
       settings: {
         systemAlerts: settings.systemAlerts,
         dailyDigest: settings.dailyDigest,
