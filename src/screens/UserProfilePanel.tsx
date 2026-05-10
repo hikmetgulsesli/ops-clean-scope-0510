@@ -7,7 +7,7 @@
 // 3. Add onClick/onChange handlers to interactive elements
 // 4. Replace placeholder data with props/state
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useAppContext } from "../contexts/AppContext";
 
 interface UserProfilePanelProps {}
@@ -21,18 +21,38 @@ export function UserProfilePanel(props: UserProfilePanelProps) {
 
   const [checking, setChecking] = useState(false);
 
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
+
   const handleCheckForUpdates = () => {
     setChecking(true);
-    setTimeout(() => setChecking(false), 1500);
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => {
+      setChecking(false);
+      timeoutRef.current = null;
+    }, 1500);
   };
 
   return (
     <>
       {/* Scrim / Backdrop */}
       <div
-        aria-hidden={true}
         className="absolute inset-0 bg-background/80 backdrop-blur-sm z-40"
         onClick={() => handleNav("dashboard")}
+        aria-label="Close profile panel"
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleNav("dashboard");
+          }
+        }}
       ></div>
       {/* Profile Drawer / Panel */}
       <aside
@@ -181,6 +201,9 @@ export function UserProfilePanel(props: UserProfilePanelProps) {
                 onClick={() =>
                   updateSettings({ darkTheme: !settings.darkTheme })
                 }
+                aria-label="Toggle dark theme"
+                role="switch"
+                aria-checked={settings.darkTheme}
               >
                 <div className="flex items-center">
                   <span
@@ -200,9 +223,6 @@ export function UserProfilePanel(props: UserProfilePanelProps) {
                       ? "bg-primary-container"
                       : "bg-surface-variant"
                   }`}
-                  aria-label="Toggle dark theme"
-                  role="switch"
-                  aria-checked={settings.darkTheme}
                 >
                   <div
                     className={`absolute top-1 w-4 h-4 bg-on-primary-container rounded-full transition-all ${

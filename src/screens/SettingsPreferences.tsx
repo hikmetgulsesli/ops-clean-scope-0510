@@ -7,7 +7,7 @@
 // 3. Add onClick/onChange handlers to interactive elements
 // 4. Replace placeholder data with props/state
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useAppContext } from "../contexts/AppContext";
 
 interface SettingsPreferencesProps {}
@@ -21,9 +21,21 @@ export function SettingsPreferences(props: SettingsPreferencesProps) {
     navigate(view);
   };
 
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
+
   const handleCheckUpdates = () => {
     setChecking(true);
-    setTimeout(() => setChecking(false), 1500);
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => {
+      setChecking(false);
+      timeoutRef.current = null;
+    }, 1500);
   };
 
   const handleClearData = () => {
@@ -180,10 +192,9 @@ export function SettingsPreferences(props: SettingsPreferencesProps) {
                 help_outline
               </span>
             </button>
-            <div
-              className="w-8 h-8 rounded-full overflow-hidden bg-surface-variant border border-outline-variant ml-sm cursor-pointer"
+            <button
+              className="w-8 h-8 rounded-full overflow-hidden bg-surface-variant border border-outline-variant ml-sm cursor-pointer p-0"
               onClick={() => handleNav("profile")}
-              role="button"
               aria-label="Open profile"
             >
               <img
@@ -192,7 +203,7 @@ export function SettingsPreferences(props: SettingsPreferencesProps) {
                 data-alt="A professional headshot of a person looking directly at the camera. The background is a plain, dark studio backdrop. The lighting is soft and flattering, highlighting the subject's features subtly. The overall tone is corporate and approachable."
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeXIdxW6_nhik3hQDlwGX_ERgCwc3R0qbfMqLUwsfyhAaEUFCykw2bSLgNmNbblDeWP9MolQp7OixmtY20Ygv-zge0SCFdvD-jGDGPZk7SdPILTweKCTLVgK1wwRRvw3vwAzndoOtGrAWAiqoPHSGeW2ewIj6ZCD5E1-uFo0Oe-VmtqAMoqjTuqxOOB-_No9kL_UYP51cnJ4eriSeh_begVkTDXda6PfDrnXuaoy7FPUK_intJ_nucc-a8QJY_rJxWxBonzBjgJKI"
               />
-            </div>
+            </button>
           </div>
         </header>
         {/* Canvas */}
