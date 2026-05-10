@@ -7,7 +7,7 @@
 // 3. Add onClick/onChange handlers to interactive elements
 // 4. Replace placeholder data with props/state
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useAppContext } from "../contexts/AppContext";
 
 interface SettingsPreferencesProps {}
@@ -16,6 +16,16 @@ export function SettingsPreferences(props: SettingsPreferencesProps) {
   const { navigate, updateSettings, settings, resetAll } = useAppContext();
   const [checking, setChecking] = useState(false);
   const [confirmClear, setConfirmClear] = useState(false);
+  const notificationsRef = useRef<HTMLDivElement>(null);
+  const systemInfoRef = useRef<HTMLDivElement>(null);
+
+  const scrollToNotifications = () => {
+    notificationsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const scrollToSystemInfo = () => {
+    systemInfoRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   const handleCheck = () => {
     setChecking(true);
@@ -38,7 +48,7 @@ export function SettingsPreferences(props: SettingsPreferencesProps) {
       </div>
       {/* CTA */}
       <button className="mb-lg h-[36px] bg-primary-container text-white text-label-md font-label-md rounded flex items-center justify-center gap-sm hover:bg-opacity-90 transition-colors focus:ring-2 focus:ring-primary-container focus:ring-offset-2 focus:ring-offset-surface-container-low" onClick={() => { navigate('create-record'); }}>
-      <span className="material-symbols-outlined" style={{fontSize: "18px"}}>add</span>
+      <span className="material-symbols-outlined pointer-events-none" style={{fontSize: "18px"}}>add</span>
                   New Entry
               </button>
       {/* Main Navigation */}
@@ -77,11 +87,11 @@ export function SettingsPreferences(props: SettingsPreferencesProps) {
                       Productivity Ops
                   </div>
       <div className="flex items-center gap-md text-primary dark:text-primary">
-      <button className="hover:bg-surface-bright dark:hover:bg-surface-bright transition-colors duration-200 p-sm rounded-full focus:ring-2 focus:ring-primary-container">
-      <span className="material-symbols-outlined" data-icon="notifications">notifications</span>
+      <button aria-label="Notifications" className="hover:bg-surface-bright dark:hover:bg-surface-bright transition-colors duration-200 p-sm rounded-full focus:ring-2 focus:ring-primary-container overflow-hidden" onClick={scrollToNotifications}>
+      <span className="material-symbols-outlined pointer-events-none" data-icon="notifications">notifications</span>
       </button>
-      <button className="hover:bg-surface-bright dark:hover:bg-surface-bright transition-colors duration-200 p-sm rounded-full focus:ring-2 focus:ring-primary-container">
-      <span className="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+      <button aria-label="Help" className="hover:bg-surface-bright dark:hover:bg-surface-bright transition-colors duration-200 p-sm rounded-full focus:ring-2 focus:ring-primary-container overflow-hidden" onClick={scrollToSystemInfo}>
+      <span className="material-symbols-outlined pointer-events-none" data-icon="help_outline">help_outline</span>
       </button>
       <div className="w-8 h-8 rounded-full overflow-hidden bg-surface-variant border border-outline-variant ml-sm cursor-pointer" aria-label="Open profile" role="button" tabIndex={0} onClick={() => navigate('profile')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); navigate('profile'); } }}>
       <img alt="User Profile" className="w-full h-full object-cover" data-alt="A professional headshot of a person looking directly at the camera. The background is a plain, dark studio backdrop. The lighting is soft and flattering, highlighting the subject's features subtly. The overall tone is corporate and approachable." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeXIdxW6_nhik3hQDlwGX_ERgCwc3R0qbfMqLUwsfyhAaEUFCykw2bSLgNmNbblDeWP9MolQp7OixmtY20Ygv-zge0SCFdvD-jGDGPZk7SdPILTweKCTLVgK1wwRRvw3vwAzndoOtGrAWAiqoPHSGeW2ewIj6ZCD5E1-uFo0Oe-VmtqAMoqjTuqxOOB-_No9kL_UYP51cnJ4eriSeh_begVkTDXda6PfDrnXuaoy7FPUK_intJ_nucc-a8QJY_rJxWxBonzBjgJKI" />
@@ -99,7 +109,7 @@ export function SettingsPreferences(props: SettingsPreferencesProps) {
       {/* Bento Grid Container */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-lg">
       {/* Notifications Panel (Spans 8 cols on large) */}
-      <section className="lg:col-span-8 bg-surface rounded-xl border border-[#334155] p-lg flex flex-col">
+      <section className="lg:col-span-8 bg-surface rounded-xl border border-[#334155] p-lg flex flex-col" ref={notificationsRef}>
       <div className="flex items-center gap-md mb-md border-b border-[#334155] pb-md">
       <span className="material-symbols-outlined text-primary" style={{fontSize: "24px"}}>notifications_active</span>
       <h2 className="text-headline-sm font-headline-sm text-on-surface">Notification Preferences</h2>
@@ -141,7 +151,7 @@ export function SettingsPreferences(props: SettingsPreferencesProps) {
       </div>
       </section>
       {/* Version & System Info (Spans 4 cols on large) */}
-      <section className="lg:col-span-4 bg-surface rounded-xl border border-[#334155] p-lg flex flex-col relative overflow-hidden group">
+      <section className="lg:col-span-4 bg-surface rounded-xl border border-[#334155] p-lg flex flex-col relative overflow-hidden group" ref={systemInfoRef}>
       {/* Abstract decorative background element */}
       <div className="absolute -right-10 -top-10 w-40 h-40 bg-primary opacity-5 rounded-full blur-2xl group-hover:opacity-10 transition-opacity duration-500 pointer-events-none"></div>
       <div className="flex items-center gap-md mb-md border-b border-[#334155] pb-md relative z-10">

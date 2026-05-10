@@ -21,6 +21,7 @@ export function Dashboard(props: DashboardProps) {
     setFilterStatus,
     searchQuery,
     filterStatus,
+    toggleMobileMenu,
   } = useAppContext();
 
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
@@ -143,8 +144,8 @@ export function Dashboard(props: DashboardProps) {
       {/* TopAppBar */}
       <header className="bg-surface-container dark:bg-surface-container docked full-width top-0 z-40 border-b border-outline-variant dark:border-outline-variant flat no shadows flex justify-between items-center h-14 w-full px-gutter ml-auto shrink-0 md:hidden">
       {/* Mobile Menu Icon (Not in JSON but needed for responsive) */}
-      <button className="p-sm text-on-surface-variant hover:bg-surface-bright dark:hover:bg-surface-bright transition-colors duration-200 cursor-pointer active:opacity-80 rounded-full md:hidden">
-      <span className="material-symbols-outlined">menu</span>
+      <button aria-label="Toggle mobile menu" className="p-sm text-on-surface-variant hover:bg-surface-bright dark:hover:bg-surface-bright transition-colors duration-200 cursor-pointer active:opacity-80 rounded-full md:hidden" onClick={toggleMobileMenu}>
+      <span className="material-symbols-outlined pointer-events-none">menu</span>
       </button>
       <div className="text-headline-md font-headline-md font-bold text-primary dark:text-primary mr-auto ml-sm">
                       Productivity Ops
@@ -316,7 +317,7 @@ export function Dashboard(props: DashboardProps) {
       <td className="p-md text-on-surface-variant">{record.type}</td>
       <td className="p-md">
       <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wide uppercase border ${
-        record.status === 'active' ? 'bg-[#10b981]/10 text-[#10b981] border-[#10b981]/20' :
+        record.status === 'active' ? 'bg-emerald-100 text-emerald-800 border-emerald-200' :
         record.status === 'pending' ? 'bg-tertiary-container/20 text-tertiary border-tertiary/20' :
         record.status === 'completed' ? 'bg-outline-variant/30 text-on-surface-variant border-outline-variant/50' :
         'bg-error-container/20 text-error border-error/20'
