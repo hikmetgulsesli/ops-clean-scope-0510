@@ -15,6 +15,7 @@ interface SystemErrorStateProps {}
 export function SystemErrorState(props: SystemErrorStateProps) {
   const { error, retryLoad, resetAll } = useAppContext();
   const [showDetails, setShowDetails] = useState(false);
+  const [errorTimestamp] = useState(() => new Date().toISOString());
 
   return (
     <>
@@ -78,7 +79,7 @@ export function SystemErrorState(props: SystemErrorStateProps) {
       </button>
       <div className={`mt-sm p-sm bg-surface-container-lowest rounded border border-outline-variant font-mono text-[10px] leading-tight text-on-surface-variant overflow-x-auto transition-all duration-150 ${showDetails ? "block" : "hidden"}`}>
                               {error || "ERR_CONNECTION_REFUSED"}<br />
-                              Timestamp: {new Date().toISOString()}<br />
+                              Timestamp: {errorTimestamp}<br />
                               Endpoint: /api/v1/ops/manifest<br />
                               Cache_Status: STALE
                           </div>

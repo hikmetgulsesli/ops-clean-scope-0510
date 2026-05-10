@@ -200,7 +200,7 @@ export function InsightsMetrics(props: InsightsMetricsProps) {
       <span className="text-label-md font-label-md">Processing Speed</span>
       </div>
       <div className="text-[32px] leading-tight font-bold text-on-surface tracking-tight mb-xs">
-                                  {totalCount.toLocaleString()} <span className="text-headline-sm font-headline-sm text-outline-variant font-normal">records</span>
+                                  {totalCount > 0 ? Math.round((activeCount / totalCount) * 240) : 0} <span className="text-headline-sm font-headline-sm text-outline-variant font-normal">ops/min</span>
       </div>
       <div className="w-full bg-surface-container-high rounded-full h-1.5 mt-auto">
       <div className="bg-secondary h-1.5 rounded-full" style={{width: `${Math.min(totalCount > 0 ? (activeCount / totalCount) * 100 : 0, 100)}%`}}></div>

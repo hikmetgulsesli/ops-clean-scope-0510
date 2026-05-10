@@ -76,7 +76,8 @@ describe('InsightsMetrics', () => {
 
   it('displays correct record counts from context', () => {
     setup({});
-    expect(screen.getByText('5')).toBeInTheDocument();
+    expect(screen.getByText('96')).toBeInTheDocument();
+    expect(screen.getByText('ops/min')).toBeInTheDocument();
     expect(screen.getByText('2')).toBeInTheDocument();
     expect(screen.getByText('20.00%')).toBeInTheDocument();
   });

@@ -56,15 +56,24 @@ export function Dashboard(props: DashboardProps) {
   };
 
   const toggleAll = () => {
-    if (selectedRows.size === paginatedRecords.length && paginatedRecords.length > 0) {
-      setSelectedRows(new Set());
+    const allSelected = paginatedRecords.every((r) => selectedRows.has(r.id));
+    if (allSelected && paginatedRecords.length > 0) {
+      setSelectedRows((prev) => {
+        const next = new Set(prev);
+        paginatedRecords.forEach((r) => next.delete(r.id));
+        return next;
+      });
     } else {
-      setSelectedRows(new Set(paginatedRecords.map((r) => r.id)));
+      setSelectedRows((prev) => {
+        const next = new Set(prev);
+        paginatedRecords.forEach((r) => next.add(r.id));
+        return next;
+      });
     }
   };
 
   const handleExport = () => {
-    const data = selectedRows.size > 0 ? records.filter((r) => selectedRows.has(r.id)) : records;
+    const data = selectedRows.size > 0 ? records.filter((r) => selectedRows.has(r.id)) : filteredRecords;
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -376,7 +385,7 @@ export function Dashboard(props: DashboardProps) {
       <input
         className="rounded-sm bg-surface border-outline-variant text-primary focus:ring-primary"
         type="checkbox"
-        checked={paginatedRecords.length > 0 && selectedRows.size === paginatedRecords.length}
+        checked={paginatedRecords.length > 0 && paginatedRecords.every((r) => selectedRows.has(r.id))}
         onChange={toggleAll}
       />
       </th>
